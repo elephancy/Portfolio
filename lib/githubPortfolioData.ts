@@ -1,4 +1,4 @@
-const OWNER = 'mahmoudelfeelig';
+const OWNER = 'elephancy';
 
 type GithubRepo = {
   name: string;
@@ -55,7 +55,7 @@ type CuratedRepoData = {
 
 // Curated from the current public README files on GitHub as of 2026-04-11.
 const CURATED_REPO_DATA: Record<string, CuratedRepoData> = {
-  'mahmoudelfeelig/MANTA': {
+  'elephancy/MANTA': {
     domain: 'Security',
     techStack: ['Python', 'Kotlin', 'Android', 'Machine Learning', 'Network Telemetry'],
     features: [

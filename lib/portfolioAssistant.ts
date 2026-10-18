@@ -52,7 +52,7 @@ export const assistantProfile = {
     },
   ],
   email: 'mahmoudelfeelig@gmail.com',
-  github: 'https://github.com/mahmoudelfeelig',
+  github: 'https://github.com/elephancy',
   linkedin: 'https://www.linkedin.com/in/elephanto',
   cv: '/Mahmoud_Elfil_CV.pdf',
 };

@@ -54,7 +54,7 @@ export default function Footer() {
             <Icon as={EnvelopeIcon} boxSize={5} />
           </Link>
           <Link
-            href="https://github.com/mahmoudelfeelig"
+            href="https://github.com/elephancy"
             target="_blank"
             rel="noopener noreferrer"
             _hover={{ color: 'accentGreen' }}

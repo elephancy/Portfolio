@@ -12,7 +12,7 @@ export const projectPages = [
       "Real account actions have a separate owner approval and capability check. A practice result does not claim to reproduce a platform's private recommendation algorithm.",
     ],
     liveUrl: "https://curate.elfeel.me/",
-    repositoryUrl: "https://github.com/mahmoudelfeelig/Curate",
+    repositoryUrl: "https://github.com/elephancy/Curate",
   },
   {
     slug: "found-roll",
@@ -27,6 +27,6 @@ export const projectPages = [
       "Claim acceptance, staff identity checks, supervisor approval, and release remain in protected workflows. The simulated relay is not proof of a physical handoff.",
     ],
     liveUrl: "https://foundroll.elfeel.me/",
-    repositoryUrl: "https://github.com/mahmoudelfeelig/found-roll",
+    repositoryUrl: "https://github.com/elephancy/found-roll",
   },
 ] as const;

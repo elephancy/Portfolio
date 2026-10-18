@@ -1335,7 +1335,7 @@ export default function WorkspaceOS() {
         <div className={styles.trayWrap}>
           {trayOpen && (
             <div className={styles.tray}>
-              <a href="https://github.com/mahmoudelfeelig" target="_blank" rel="noreferrer">
+              <a href="https://github.com/elephancy" target="_blank" rel="noreferrer">
                 <Github size={17} /> GitHub
               </a>
               <a href="mailto:mahmoudelfeelig@gmail.com" onClick={copyEmail}>
@@ -1368,7 +1368,7 @@ export default function WorkspaceOS() {
           Reachable by{' '}
           <a href="mailto:mahmoudelfeelig@gmail.com" onClick={copyEmail}>email</a>,{' '}
           <a href="https://www.linkedin.com/in/elephanto" target="_blank" rel="noreferrer">LinkedIn</a>, or{' '}
-          <a href="https://github.com/mahmoudelfeelig" target="_blank" rel="noreferrer">GitHub</a>.
+          <a href="https://github.com/elephancy" target="_blank" rel="noreferrer">GitHub</a>.
         </span>
       </section>
 
@@ -1499,7 +1499,7 @@ export default function WorkspaceOS() {
                     <a href="mailto:mahmoudelfeelig@gmail.com" onClick={copyEmail}>
                       <Mail size={17} /> {emailCopied ? 'Email copied' : 'Email'}
                     </a>
-                    <a href="https://github.com/mahmoudelfeelig" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
+                    <a href="https://github.com/elephancy" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a>
                     <a href="https://www.linkedin.com/in/elephanto" target="_blank" rel="noreferrer"><Network size={17} /> LinkedIn</a>
                   </div>
                 )}

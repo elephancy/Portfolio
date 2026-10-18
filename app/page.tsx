@@ -35,7 +35,7 @@ const profileStructuredData = {
         "Mahmoud Elfil",
         "Elfeel",
         "Elfil",
-        "mahmoudelfeelig",
+        "elephancy",
         "Feel",
       ],
       url: siteUrl,
@@ -62,7 +62,7 @@ const profileStructuredData = {
         "Docker",
       ],
       sameAs: [
-        "https://github.com/mahmoudelfeelig",
+        "https://github.com/elephancy",
         "https://www.linkedin.com/in/elephanto",
       ],
     },

@@ -21,7 +21,7 @@ export type PortfolioProject = {
   featured: boolean;
 };
 
-const github = 'https://github.com/mahmoudelfeelig';
+const github = 'https://github.com/elephancy';
 
 export const projects: PortfolioProject[] = [
   {
@@ -152,7 +152,7 @@ export const projects: PortfolioProject[] = [
     status: 'featured',
     language: 'Python',
     stack: ['Python', 'Android', 'Kotlin', 'Machine learning', 'Network telemetry'],
-    repoUrl: 'https://github.com/mahmoudelfeelig/MANTA',
+    repoUrl: 'https://github.com/elephancy/MANTA',
     liveUrl: 'https://bachelor.elfeel.me',
     updatedAt: '2026-07-03',
     domain: 'bachelor.elfeel.me',

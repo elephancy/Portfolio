@@ -11,7 +11,7 @@ Mahmoud Elfeel is a Berlin-based software engineer working across backend servic
 - Short name references: Feel, Elfeel, Elfil
 - Location: Berlin, Germany
 - Website: https://elfeel.me
-- GitHub: https://github.com/mahmoudelfeelig
+- GitHub: https://github.com/elephancy
 - LinkedIn: https://www.linkedin.com/in/elephanto
 - Email: mahmoudelfeelig@gmail.com
 
@@ -19,7 +19,7 @@ Mahmoud Elfeel is a Berlin-based software engineer working across backend servic
 
 - Homepage and project portfolio: https://elfeel.me
 - Resume: https://elfeel.me/Mahmoud_Elfil_CV.pdf
-- GitHub repositories: https://github.com/mahmoudelfeelig
+- GitHub repositories: https://github.com/elephancy
 
 ## Selected projects
 

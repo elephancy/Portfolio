@@ -49,7 +49,7 @@ styles/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/mahmoudelfeelig/portfolio.git
+   git clone https://github.com/elephancy/Portfolio.git
    ```
 
 2. Install dependencies:
@@ -154,7 +154,7 @@ The homepage keeps selected state in query parameters:
 Mahmoud Elfeel  
 Email: mahmoudelfeelig@gmail.com  
 Website: https://elfeel.me  
-GitHub: https://github.com/mahmoudelfeelig
+GitHub: https://github.com/elephancy
 
 ## License
 

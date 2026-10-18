@@ -30,13 +30,13 @@ export default function Contact() {
           </Text>
           <Text>
             <ChakraLink
-              href="https://github.com/mahmoudelfeelig"
+              href="https://github.com/elephancy"
               target="_blank"
               rel="noopener noreferrer"
               textDecoration="underline"
               _hover={{ color: 'accentGreen' }}
             >
-              github.com/mahmoudelfeelig
+              github.com/elephancy
             </ChakraLink>
           </Text>
           <Text>
