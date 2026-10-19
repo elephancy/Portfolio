@@ -40,7 +40,8 @@
 		"start": "next start",
 		"build:cloudflare": "opennextjs-cloudflare build",
 		"preview:cloudflare": "opennextjs-cloudflare build && wrangler dev",
-		"deploy:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+		"deploy:cloudflare": "node --test scripts/ops-deploy.test.mjs && node scripts/ops-deploy.mjs --engine opennext --config wrangler.jsonc",
+		"test:deployment": "node --test scripts/ops-deploy.test.mjs"
 	},
 	"overrides": {
 		"postcss": "8.5.28"
