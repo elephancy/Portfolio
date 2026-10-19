@@ -84,8 +84,8 @@ Cloudflare configuration lives in:
 Production deployments are owned by Cloudflare Builds through the repository
 connection configured in the Cloudflare dashboard. Pushes to its production
 branch build and deploy the Worker automatically; other branches can produce
-preview versions. Manual Wrangler deployment remains available only for
-recovery or first-time setup.
+preview versions. Manual production deployment uses the same central Ops
+entrypoint, including recovery and first-time setup.
 
 The repository explorer works without credentials and falls back to the
 portfolio's bundled project data if GitHub is unavailable. For a higher GitHub
@@ -164,3 +164,17 @@ later (`AGPL-3.0-or-later`). See [LICENSE](./LICENSE).
 Personal assets, screenshots, demo videos, logos, CV/resume files, and other
 identity/portfolio media in `public/` are not licensed for reuse without
 explicit permission unless a file-specific notice says otherwise.
+
+### Central Ops deployment policy
+
+Production deployment must use the central entrypoint below. It downloads the
+Ops deployment runner over HTTPS, which applies current Ops-owned observability
+policy to an ephemeral config while preserving application bindings and existing
+log export destinations. If Ops is unavailable or validation fails, deployment
+stops. Direct production `wrangler deploy` and `opennextjs-cloudflare deploy`
+bypass this boundary and must not be used. Local preview and dry-run commands
+remain available. No telemetry settings or Ops credentials belong in this repo.
+
+```bash
+npm run deploy:cloudflare
+```

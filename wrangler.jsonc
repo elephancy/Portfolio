@@ -20,8 +20,5 @@
 				"period": 60
 			}
 		}
-	],
-	"observability": {
-		"enabled": true
-	}
+	]
 }
