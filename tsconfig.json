@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* === React 18/19 JSX transform === */
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "types": [
       "node",
       "react"
@@ -27,8 +27,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "paths": {
-      "@/*": ["./app/*"],
-      "@components/*": ["./components/*"]
+      "@/*": [
+        "./app/*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ]
     },
     "plugins": [
       {
@@ -42,8 +46,10 @@
     "**/*.tsx",
     "global.d.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
-, "tailwind.config.cjs"  ],
+    ".next/types/**/*.ts",
+    "tailwind.config.cjs",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

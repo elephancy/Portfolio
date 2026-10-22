@@ -1,8 +1,8 @@
 module.exports = {
   ci: {
     collect: {
-      url: ['http://localhost:3000'],
-      startServerCommand: 'npm run build && npm run start',
+      url: ['http://127.0.0.1:3000/'],
+      startServerCommand: 'npm run start -- --hostname 127.0.0.1 --port 3000',
       numberOfRuns: 2,
     },
     assert: {
@@ -14,6 +14,6 @@ module.exports = {
         'unused-javascript': ['warn', { maxNumericValue: 150000 }],
       },
     },
-    upload: { target: 'temporary-public-storage' },
+    upload: { target: 'filesystem', outputDir: './artifacts/lighthouse' },
   },
 };

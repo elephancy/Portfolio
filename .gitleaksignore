@@ -1,0 +1,6 @@
+# These exact historical generated Next build outputs contain the same build key.
+# The matching manifest registers zero node and edge Server Actions; the build cache
+# expired 2025-05-31. Current .next outputs are untracked and ignored.
+# This does not exclude later build keys, any path, or any rule.
+87fc3940a8e1803e53109f02577c1984b4e43618:.next/cache/.rscinfo:generic-api-key:1
+87fc3940a8e1803e53109f02577c1984b4e43618:.next/server/server-reference-manifest.json:generic-api-key:4
