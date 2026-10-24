@@ -2,3 +2,8 @@ node_modules
 /.next
 /.open-next
 .env*.local
+
+# Generated compiler and browser test caches
+*.tsbuildinfo
+/test-results/
+/playwright-report/
