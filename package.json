@@ -44,6 +44,9 @@
 		"test:deployment": "node --test scripts/ops-deploy.test.mjs"
 	},
 	"overrides": {
-		"postcss": "8.5.28"
+		"postcss": "8.5.28",
+		"miniflare@5.20261019.0-beta": {
+			"undici": "7.30.1"
+		}
 	}
 }
