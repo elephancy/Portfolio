@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Mahmoud Elfeel",
   },
   description:
-    "Mahmoud Elfeel, also written Mahmoud Elfil, is a Berlin-based software engineer building backend, full-stack, mobile, security, and developer-tooling projects.",
+    "Mahmoud Elfeel, also written Mahmoud Elfil, is a software engineer in Germany building backend, full-stack, mobile, security, and developer-tooling projects.",
   keywords: [
     "Mahmoud Elfeel",
     "Mahmoud Elfil",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "software engineer",
     "full-stack developer",
     "backend developer",
-    "Berlin",
+    "Germany",
   ],
   authors: [{ name: "Mahmoud Elfeel", url: siteUrl }],
   creator: "Mahmoud Elfeel",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "Mahmoud Elfeel",
     title: "Mahmoud Elfeel (Mahmoud Elfil) | Software Engineer",
     description:
-      "Portfolio of Mahmoud Elfeel, a Berlin-based software engineer working across backend, full-stack, mobile, security, and developer tooling.",
+      "Portfolio of Mahmoud Elfeel, a software engineer in Germany working across backend, full-stack, mobile, security, and developer tooling.",
     firstName: "Mahmoud",
     lastName: "Elfeel",
     images: [

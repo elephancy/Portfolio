@@ -1133,7 +1133,7 @@ export default function WorkspaceOS() {
             <div>
               <h1 id="about-title">About</h1>
               <h3>
-                I'm a junior software engineer in Berlin with industry experience building backend services, internal
+                I'm a junior software engineer in Germany with industry experience building backend services, internal
                 dashboards, desktop automation tools, Android/iOS workflows, and security-connected systems.
                 Hands-on with Python/FastAPI, TypeScript/React/Next.js, Node.js, Kotlin, Swift, Linux, Docker,
                 CI/CD, and REST APIs. B.Sc. Networking Engineering expected July 2026; interested in backend and
@@ -1479,7 +1479,7 @@ export default function WorkspaceOS() {
                 {openWindow === 'resume' && (
                   <div className={styles.resumeApp}>
                     <strong>Mahmoud Elfeel</strong>
-                    <span>Berlin-based junior software engineer completing a B.Sc. in Networking Engineering in July 2026. Industry experience across Python/FastAPI backend services, React/Next.js dashboards, Python/Qt desktop tooling, Kotlin Android security workflows, Swift iOS capture workflows, Wazuh/WireGuard integrations, and computer-vision preprocessing.</span>
+                    <span>Junior software engineer in Germany completing a B.Sc. in Networking Engineering in July 2026. Industry experience across Python/FastAPI backend services, React/Next.js dashboards, Python/Qt desktop tooling, Kotlin Android security workflows, Swift iOS capture workflows, Wazuh/WireGuard integrations, and computer-vision preprocessing.</span>
                     <div className={styles.resumeSections}>
                       <p>Backend / full-stack: FastAPI, REST APIs, authentication, React/Next.js, Node/Express, PostgreSQL and MongoDB</p>
                       <p>Security software: Wazuh, WireGuard, vulnerability workflows, Wi-Fi and application risk scoring</p>

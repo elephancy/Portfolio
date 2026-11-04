@@ -2,14 +2,14 @@
 
 > Personal software engineering portfolio for Mahmoud Elfeel, whose name is also written Mahmoud Elfil.
 
-Mahmoud Elfeel is a Berlin-based software engineer working across backend services, full-stack applications, mobile workflows, security systems, and developer tooling. This is his personal website.
+Mahmoud Elfeel is a software engineer in Germany working across backend services, full-stack applications, mobile workflows, security systems, and developer tooling. This is his personal website.
 
 ## Identity
 
 - Name: Mahmoud Elfil
 - Alternate preferred spelling: Mahmoud Elfil
 - Short name references: Feel, Elfeel, Elfil
-- Location: Berlin, Germany
+- Location: Germany
 - Website: https://elfeel.me
 - GitHub: https://github.com/elephancy
 - LinkedIn: https://www.linkedin.com/in/elephanto

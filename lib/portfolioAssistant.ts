@@ -3,11 +3,11 @@ import { projects } from '../data/projects';
 export const assistantProfile = {
   name: 'Mahmoud Elfeel',
   alternateName: 'Mahmoud Elfil',
-  location: 'Berlin, Germany',
+  location: 'Germany',
   role: 'Junior Software Engineer',
   education: 'B.Sc. Networking Engineering, graduating July 2026',
   focus: 'Backend and full-stack software engineering roles',
-  summary: 'Berlin-based software engineer with industry experience across backend services, internal dashboards, desktop automation, Android and iOS workflows, network security, and computer-vision pipelines.',
+  summary: 'Software engineer in Germany with industry experience across backend services, internal dashboards, desktop automation, Android and iOS workflows, network security, and computer-vision pipelines.',
   skills: [
     'Python',
     'FastAPI',
