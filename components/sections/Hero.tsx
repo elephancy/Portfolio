@@ -44,7 +44,7 @@ export default function Hero() {
             <Box className={styles.metaDivider} />
 
             <Text className={styles.metaLabel}>Location</Text>
-            <Text className={styles.metaValue}>Berlin, Germany</Text>
+            <Text className={styles.metaValue}>Germany</Text>
 
             <Box className={styles.metaDivider} />
 

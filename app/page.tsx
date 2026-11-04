@@ -42,10 +42,9 @@ const profileStructuredData = {
       image: `${siteUrl}/Logo.png`,
       jobTitle: "Software Engineer",
       description:
-        "Berlin-based software engineer working across backend services, full-stack applications, mobile workflows, security systems, and developer tooling.",
+        "Software engineer in Germany working across backend services, full-stack applications, mobile workflows, security systems, and developer tooling.",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Berlin",
         addressCountry: "DE",
       },
       knowsAbout: [
