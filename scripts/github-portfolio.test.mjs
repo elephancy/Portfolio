@@ -289,12 +289,38 @@ test('client detail loads deduplicate successful requests and retry transient fa
     calls++;
     const name = new URL(String(input), 'https://elfeel.me').searchParams.get('repo');
     if (name === 'ClientRetry' && calls === 1) return new Response('', { status: 503 });
-    return Response.json({ repo: { name, fullName: `elephancy/${name}` } });
+    return Response.json({ repo: { name, fullName: `elephancy/${name}` }, source: 'github-api-live' });
   });
   assert.equal(await loadGithubRepoDetails('ClientRetry'), null);
   const [left, right] = await Promise.all([loadGithubRepoDetails('ClientRetry'), loadGithubRepoDetails('clientretry')]);
   assert.equal(left.name, 'ClientRetry');
   assert.equal(left, right);
   assert.equal((await loadGithubRepoDetails('ClientRetry')), left);
+  assert.equal(calls, 2);
+});
+
+test('a dated client fallback stays provisional so reselection can recover live details', async (t) => {
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls++;
+    return Response.json({
+      repo: {
+        name: 'ClientSnapshotRecovery', fullName: 'elephancy/ClientSnapshotRecovery',
+        about: calls === 1 ? 'dated snapshot detail' : 'current live detail',
+        ...(calls === 1 ? { snapshotAt: '2026-11-07T00:00:00Z' } : {}),
+      },
+      source: calls === 1 ? 'github-public-snapshot' : 'github-api-live',
+    });
+  });
+  const [first, concurrent] = await Promise.all([
+    loadGithubRepoDetails('ClientSnapshotRecovery'), loadGithubRepoDetails('ClientSnapshotRecovery'),
+  ]);
+  assert.equal(first.about, 'dated snapshot detail');
+  assert.equal(concurrent, first);
+  assert.equal(calls, 1);
+  const recovered = await loadGithubRepoDetails('ClientSnapshotRecovery');
+  assert.equal(recovered.about, 'current live detail');
+  assert.equal(calls, 2);
+  assert.equal(await loadGithubRepoDetails('ClientSnapshotRecovery'), recovered);
   assert.equal(calls, 2);
 });
