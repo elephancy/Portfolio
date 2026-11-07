@@ -1,7 +1,5 @@
 import WorkspaceOS from "../components/sections/WorkspaceOS";
 import { projects } from "../data/projects";
-import { projectPages } from "./projects/projectPages";
-import styles from "./projects/projectPages.module.css";
 import "../styles/globals.css";
 
 const siteUrl = "https://elfeel.me";
@@ -99,15 +97,6 @@ export default function HomePage() {
         }}
       />
       <WorkspaceOS />
-      <nav className={styles.projectIndex} aria-label="Recent projects">
-        <h2>Recent projects</h2>
-        {projectPages.map((project) => (
-          <a key={project.slug} href={`/projects/${project.slug}`}>
-            <strong>{project.title}</strong>
-            <span>{project.description}</span>
-          </a>
-        ))}
-      </nav>
     </>
   );
 }
