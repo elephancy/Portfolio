@@ -25,8 +25,8 @@ export default function OpenGraphImage() {
         <img
           src="https://elfeel.me/Logo-transparent.png"
           alt=""
-          width="302"
-          height="302"
+          width={302}
+          height={302}
           style={{ objectFit: "contain", marginRight: "56px" }}
         />
         <div style={{ display: "flex", flexDirection: "column" }}>
