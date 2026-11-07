@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 // Public routes hosted across the verified elfeel.me domain. Keep account,
 // admin, API, user profile, interactive study tools, enrollment, and archived
-// product hosts out of this public URL inventory. Portfolio case studies remain.
+// product hosts and their retired portfolio case studies out of this inventory.
 const publicRoutes: ReadonlyArray<readonly [host: string, paths: readonly string[]]> = [
   ["https://academy.elfeel.me", ["/"]],
   ["https://anubis.elfeel.me", ["/", "/hints", "/leaderboard"]],
@@ -59,8 +59,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    { url: "https://elfeel.me/projects/curate" },
-    { url: "https://elfeel.me/projects/found-roll" },
     ...publicRoutes.flatMap(([host, paths]) =>
       paths.map((path) => ({ url: `${host}${path}` })),
     ),

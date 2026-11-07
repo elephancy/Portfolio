@@ -29,5 +29,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm audit --audit-level=high
+      - name: Verify portfolio repository visibility
+        run: node --test scripts/github-portfolio.test.mjs
       - name: Build and typecheck Cloudflare Worker
         run: npm run build:cloudflare

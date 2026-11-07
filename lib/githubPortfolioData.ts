@@ -1,4 +1,6 @@
 const OWNER = 'elephancy';
+// Retired projects are kept in source control, but no longer shown in the portfolio.
+const RETIRED_PROJECT_NAMES = new Set(['curate', 'foundroll', 'situationroom']);
 
 type GithubRepo = {
   name: string;
@@ -407,6 +409,8 @@ export async function fetchGithubRepos() {
   const seenRepos = new Set<string>();
   const filtered = primaryRepos.filter((repo) => {
     const repoKey = (repo.full_name || repo.name).toLowerCase();
+    const projectName = repo.name.toLowerCase().replace(/[-_\s]/g, '');
+    if (RETIRED_PROJECT_NAMES.has(projectName)) return false;
     if (repo.name.toLowerCase().includes('.github') || seenRepos.has(repoKey)) return false;
     seenRepos.add(repoKey);
     return true;
