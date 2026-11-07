@@ -1,0 +1,1274 @@
+{
+  "schemaVersion": 1,
+  "owner": "elephancy",
+  "generatedAt": "2026-11-07T20:00:03.900Z",
+  "sources": {
+    "repositories": "https://api.github.com/users/elephancy/repos?per_page=100&sort=updated",
+    "languages": "https://api.github.com/repos/elephancy/{repo}/languages",
+    "summaries": "Existing portfolio curation plus public descriptions and topics; README contents are not copied into this snapshot."
+  },
+  "repositories": [
+    {
+      "name": "Portfolio",
+      "fullName": "elephancy/Portfolio",
+      "slug": "portfolio",
+      "url": "https://github.com/elephancy/Portfolio",
+      "description": "A portfolio website highlighting my favorite personal open-source projects",
+      "language": "TypeScript",
+      "createdAt": "2025-05-17T20:10:27Z",
+      "updatedAt": "2026-11-07T19:48:49Z",
+      "pushedAt": "2026-11-07T19:48:44Z",
+      "topics": [],
+      "domain": "Frontend",
+      "techStack": [
+        "Next.js App Router",
+        "Chakra UI",
+        "TypeScript",
+        "Framer Motion",
+        "Three.js",
+        "@react-three/fiber",
+        "GLSL"
+      ],
+      "features": [
+        "Framer Motion animations and scroll-driven effects.",
+        "3D hero banner powered by WebGL shaders.",
+        "Modular sections for about, experience, projects, and skills.",
+        "Responsive layout tuned for desktop and mobile."
+      ],
+      "about": "A portfolio website highlighting my favorite personal open-source projects",
+      "languages": [
+        {
+          "name": "TypeScript",
+          "bytes": 250971,
+          "percent": 71.6
+        },
+        {
+          "name": "CSS",
+          "bytes": 76797,
+          "percent": 21.9
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 22776,
+          "percent": 6.5
+        }
+      ]
+    },
+    {
+      "name": "SystemForge",
+      "fullName": "elephancy/SystemForge",
+      "slug": "systemforge",
+      "url": "https://github.com/elephancy/SystemForge",
+      "description": "A system design live advanced simulator with RNG elements",
+      "language": "TypeScript",
+      "createdAt": "2026-08-07T21:02:01Z",
+      "updatedAt": "2026-11-07T18:59:22Z",
+      "pushedAt": "2026-11-07T19:02:36Z",
+      "topics": [],
+      "domain": "TypeScript",
+      "techStack": [
+        "TypeScript"
+      ],
+      "features": [],
+      "about": "A system design live advanced simulator with RNG elements",
+      "languages": [
+        {
+          "name": "TypeScript",
+          "bytes": 1962601,
+          "percent": 80.8
+        },
+        {
+          "name": "CSS",
+          "bytes": 269581,
+          "percent": 11.1
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 121390,
+          "percent": 5
+        },
+        {
+          "name": "Shell",
+          "bytes": 47267,
+          "percent": 1.9
+        },
+        {
+          "name": "Python",
+          "bytes": 18449,
+          "percent": 0.8
+        },
+        {
+          "name": "HTML",
+          "bytes": 8176,
+          "percent": 0.3
+        },
+        {
+          "name": "PLpgSQL",
+          "bytes": 2033,
+          "percent": 0.1
+        }
+      ]
+    },
+    {
+      "name": "RPS",
+      "fullName": "elephancy/RPS",
+      "slug": "rps",
+      "url": "https://github.com/elephancy/RPS",
+      "description": "An online multiplayer marketing economy simulator with a variety of casino-like and arcade games",
+      "language": "JavaScript",
+      "createdAt": "2025-04-17T22:47:16Z",
+      "updatedAt": "2026-11-04T20:38:56Z",
+      "pushedAt": "2026-11-07T14:37:10Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "JavaScript"
+      ],
+      "features": [],
+      "about": "An online multiplayer marketing economy simulator with a variety of casino-like and arcade games",
+      "languages": [
+        {
+          "name": "JavaScript",
+          "bytes": 945513,
+          "percent": 98.2
+        },
+        {
+          "name": "CSS",
+          "bytes": 15128,
+          "percent": 1.6
+        },
+        {
+          "name": "HTML",
+          "bytes": 1065,
+          "percent": 0.1
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 928,
+          "percent": 0.1
+        }
+      ]
+    },
+    {
+      "name": "Planora",
+      "fullName": "elephancy/Planora",
+      "slug": "planora",
+      "url": "https://github.com/elephancy/Planora",
+      "description": "A university scheduling program that uses CP-SAT and metaheuristics to solve and optimize schedules according to customizable weighted constraints",
+      "language": "Python",
+      "createdAt": "2025-11-06T17:30:58Z",
+      "updatedAt": "2026-11-06T16:53:19Z",
+      "pushedAt": "2026-11-07T14:13:12Z",
+      "topics": [],
+      "domain": "Python",
+      "techStack": [
+        "Python"
+      ],
+      "features": [],
+      "about": "A university scheduling program that uses CP-SAT and metaheuristics to solve and optimize schedules according to customizable weighted constraints",
+      "languages": [
+        {
+          "name": "Python",
+          "bytes": 22025604,
+          "percent": 85.4
+        },
+        {
+          "name": "PowerShell",
+          "bytes": 2186324,
+          "percent": 8.5
+        },
+        {
+          "name": "Shell",
+          "bytes": 418888,
+          "percent": 1.6
+        },
+        {
+          "name": "Kotlin",
+          "bytes": 313010,
+          "percent": 1.2
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 254117,
+          "percent": 1
+        },
+        {
+          "name": "CSS",
+          "bytes": 178865,
+          "percent": 0.7
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 158687,
+          "percent": 0.6
+        },
+        {
+          "name": "C",
+          "bytes": 141024,
+          "percent": 0.5
+        },
+        {
+          "name": "TeX",
+          "bytes": 119997,
+          "percent": 0.5
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 1562,
+          "percent": 0
+        },
+        {
+          "name": "Inno Setup",
+          "bytes": 1207,
+          "percent": 0
+        },
+        {
+          "name": "HTML",
+          "bytes": 778,
+          "percent": 0
+        },
+        {
+          "name": "Batchfile",
+          "bytes": 442,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "Anubis",
+      "fullName": "elephancy/Anubis",
+      "slug": "anubis",
+      "url": "https://github.com/elephancy/Anubis",
+      "description": "An online puzzle game with different game levels and progression",
+      "language": "TypeScript",
+      "createdAt": "2025-10-29T17:38:10Z",
+      "updatedAt": "2026-11-03T23:13:08Z",
+      "pushedAt": "2026-11-07T12:19:07Z",
+      "topics": [],
+      "domain": "Product",
+      "techStack": [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "MongoDB",
+        "Cloudinary",
+        "Vitest"
+      ],
+      "features": [
+        "Alternate reality game platform with multi-step puzzle levels.",
+        "Level content stored as JSON, MDX, and asset bundles.",
+        "Custom hashed-cookie session auth for player progress.",
+        "GitHub Actions pipeline for lint, test, and production build."
+      ],
+      "about": "An online puzzle game with different game levels and progression",
+      "languages": [
+        {
+          "name": "TypeScript",
+          "bytes": 97578,
+          "percent": 51.9
+        },
+        {
+          "name": "CSS",
+          "bytes": 75893,
+          "percent": 40.4
+        },
+        {
+          "name": "MDX",
+          "bytes": 11010,
+          "percent": 5.9
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 2516,
+          "percent": 1.3
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 995,
+          "percent": 0.5
+        }
+      ]
+    },
+    {
+      "name": "MANTA",
+      "fullName": "elephancy/MANTA",
+      "slug": "manta",
+      "url": "https://github.com/elephancy/MANTA",
+      "description": "Anomaly detection of application network traffic on Android devices using Metadata only",
+      "language": "Python",
+      "createdAt": "2026-02-07T16:29:24Z",
+      "updatedAt": "2026-11-06T05:41:22Z",
+      "pushedAt": "2026-11-07T11:40:54Z",
+      "topics": [],
+      "domain": "Security",
+      "techStack": [
+        "Python",
+        "Kotlin",
+        "Android",
+        "Machine Learning",
+        "Network Telemetry"
+      ],
+      "features": [
+        "Metadata-only mobile network threat detection without inspecting payload contents.",
+        "Combines an Android monitoring prototype with model training and evaluation workflows.",
+        "Uses flow behavior and network telemetry for on-device anomaly scoring.",
+        "Documents the research evidence, privacy boundary, and deployable prototype."
+      ],
+      "about": "Anomaly detection of application network traffic on Android devices using Metadata only",
+      "languages": [
+        {
+          "name": "Python",
+          "bytes": 950956,
+          "percent": 48
+        },
+        {
+          "name": "Kotlin",
+          "bytes": 757313,
+          "percent": 38.2
+        },
+        {
+          "name": "TeX",
+          "bytes": 90899,
+          "percent": 4.6
+        },
+        {
+          "name": "HTML",
+          "bytes": 81608,
+          "percent": 4.1
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 54968,
+          "percent": 2.8
+        },
+        {
+          "name": "CSS",
+          "bytes": 31146,
+          "percent": 1.6
+        },
+        {
+          "name": "PowerShell",
+          "bytes": 13170,
+          "percent": 0.7
+        },
+        {
+          "name": "Makefile",
+          "bytes": 1191,
+          "percent": 0.1
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 707,
+          "percent": 0
+        },
+        {
+          "name": "Perl",
+          "bytes": 35,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "deadworks",
+      "fullName": "elephancy/deadworks",
+      "slug": "deadworks",
+      "url": "https://github.com/elephancy/deadworks",
+      "description": "Deadworks is a mod for Deadlock enabling you to make and play on customized dedicated servers",
+      "language": "C#",
+      "createdAt": "2026-10-02T11:55:09Z",
+      "updatedAt": "2026-10-18T21:53:34Z",
+      "pushedAt": "2026-11-06T13:44:47Z",
+      "topics": [],
+      "domain": "C#",
+      "techStack": [
+        "C#"
+      ],
+      "features": [],
+      "about": "Deadworks is a mod for Deadlock enabling you to make and play on customized dedicated servers",
+      "languages": [
+        {
+          "name": "C#",
+          "bytes": 1334446,
+          "percent": 45.5
+        },
+        {
+          "name": "Rust",
+          "bytes": 682897,
+          "percent": 23.3
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 353247,
+          "percent": 12
+        },
+        {
+          "name": "C++",
+          "bytes": 303340,
+          "percent": 10.3
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 127248,
+          "percent": 4.3
+        },
+        {
+          "name": "CSS",
+          "bytes": 59025,
+          "percent": 2
+        },
+        {
+          "name": "Python",
+          "bytes": 41533,
+          "percent": 1.4
+        },
+        {
+          "name": "Shell",
+          "bytes": 22145,
+          "percent": 0.8
+        },
+        {
+          "name": "Perl",
+          "bytes": 4112,
+          "percent": 0.1
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 4055,
+          "percent": 0.1
+        },
+        {
+          "name": "HTML",
+          "bytes": 305,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "OCPP-Demo",
+      "fullName": "elephancy/OCPP-Demo",
+      "slug": "ocpp-demo",
+      "url": "https://github.com/elephancy/OCPP-Demo",
+      "description": "A backend demo for charger event ingestion, charging-session lifecycle management, and reliable event processing.",
+      "language": "Python",
+      "createdAt": "2026-06-25T14:55:20Z",
+      "updatedAt": "2026-11-06T03:49:18Z",
+      "pushedAt": "2026-11-06T03:51:18Z",
+      "topics": [],
+      "domain": "Python",
+      "techStack": [
+        "Python"
+      ],
+      "features": [],
+      "about": "A backend demo for charger event ingestion, charging-session lifecycle management, and reliable event processing.",
+      "languages": [
+        {
+          "name": "Python",
+          "bytes": 209817,
+          "percent": 62.8
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 75382,
+          "percent": 22.6
+        },
+        {
+          "name": "CSS",
+          "bytes": 39696,
+          "percent": 11.9
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 4458,
+          "percent": 1.3
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 2551,
+          "percent": 0.8
+        },
+        {
+          "name": "Makefile",
+          "bytes": 987,
+          "percent": 0.3
+        },
+        {
+          "name": "Shell",
+          "bytes": 683,
+          "percent": 0.2
+        },
+        {
+          "name": "Mako",
+          "bytes": 440,
+          "percent": 0.1
+        }
+      ]
+    },
+    {
+      "name": "Doompedia",
+      "fullName": "elephancy/Doompedia",
+      "slug": "doompedia",
+      "url": "https://github.com/elephancy/Doompedia",
+      "description": "An app that shows Wikipedia pages as a *healthier* substitute for doomscrolling that works on both iOS and Android",
+      "language": "Kotlin",
+      "createdAt": "2026-02-09T02:47:28Z",
+      "updatedAt": "2026-11-04T22:11:21Z",
+      "pushedAt": "2026-11-05T00:10:42Z",
+      "topics": [],
+      "domain": "Product",
+      "techStack": [
+        "Kotlin"
+      ],
+      "features": [],
+      "about": "An app that shows Wikipedia pages as a *healthier* substitute for doomscrolling that works on both iOS and Android",
+      "languages": [
+        {
+          "name": "Kotlin",
+          "bytes": 247713,
+          "percent": 39.1
+        },
+        {
+          "name": "Swift",
+          "bytes": 210720,
+          "percent": 33.3
+        },
+        {
+          "name": "Python",
+          "bytes": 93838,
+          "percent": 14.8
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 33839,
+          "percent": 5.3
+        },
+        {
+          "name": "CSS",
+          "bytes": 22837,
+          "percent": 3.6
+        },
+        {
+          "name": "Shell",
+          "bytes": 18446,
+          "percent": 2.9
+        },
+        {
+          "name": "HTML",
+          "bytes": 5649,
+          "percent": 0.9
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 683,
+          "percent": 0.1
+        }
+      ]
+    },
+    {
+      "name": "SceneChain",
+      "fullName": "elephancy/SceneChain",
+      "slug": "scenechain",
+      "url": "https://github.com/elephancy/SceneChain",
+      "description": "A graphical password protocol study case",
+      "language": "Java",
+      "createdAt": "2026-07-22T17:46:43Z",
+      "updatedAt": "2026-11-04T17:19:59Z",
+      "pushedAt": "2026-11-04T21:21:52Z",
+      "topics": [],
+      "domain": "Java",
+      "techStack": [
+        "Java"
+      ],
+      "features": [],
+      "about": "A graphical password protocol study case",
+      "languages": [
+        {
+          "name": "Java",
+          "bytes": 125795,
+          "percent": 46.3
+        },
+        {
+          "name": "Python",
+          "bytes": 52875,
+          "percent": 19.5
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 51499,
+          "percent": 19
+        },
+        {
+          "name": "CSS",
+          "bytes": 21857,
+          "percent": 8
+        },
+        {
+          "name": "Shell",
+          "bytes": 10198,
+          "percent": 3.8
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 4437,
+          "percent": 1.6
+        },
+        {
+          "name": "PLpgSQL",
+          "bytes": 2189,
+          "percent": 0.8
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 1278,
+          "percent": 0.5
+        },
+        {
+          "name": "Makefile",
+          "bytes": 815,
+          "percent": 0.3
+        },
+        {
+          "name": "HTML",
+          "bytes": 811,
+          "percent": 0.3
+        }
+      ]
+    },
+    {
+      "name": "TypeShift",
+      "fullName": "elephancy/TypeShift",
+      "slug": "typeshift",
+      "url": "https://github.com/elephancy/TypeShift",
+      "description": "A collection of typing games with extensive analysis for your typing patterns and mistakes",
+      "language": "TypeScript",
+      "createdAt": "2026-03-04T23:36:12Z",
+      "updatedAt": "2026-11-04T20:41:05Z",
+      "pushedAt": "2026-11-04T20:40:59Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "TypeScript"
+      ],
+      "features": [],
+      "about": "A collection of typing games with extensive analysis for your typing patterns and mistakes",
+      "languages": [
+        {
+          "name": "TypeScript",
+          "bytes": 735456,
+          "percent": 85.9
+        },
+        {
+          "name": "CSS",
+          "bytes": 104469,
+          "percent": 12.2
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 11430,
+          "percent": 1.3
+        },
+        {
+          "name": "Shell",
+          "bytes": 4545,
+          "percent": 0.5
+        }
+      ]
+    },
+    {
+      "name": "GeneralsGameCode",
+      "fullName": "elephancy/GeneralsGameCode",
+      "slug": "generalsgamecode",
+      "url": "https://github.com/elephancy/GeneralsGameCode",
+      "description": "Command and Conquer: Generals - Zero Hour",
+      "language": null,
+      "createdAt": "2026-11-05T08:18:00Z",
+      "updatedAt": "2026-11-05T08:18:00Z",
+      "pushedAt": "2026-11-04T20:25:35Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [],
+      "features": [],
+      "about": "Command and Conquer: Generals - Zero Hour",
+      "languages": [
+        {
+          "name": "C++",
+          "bytes": 53581864,
+          "percent": 96.4
+        },
+        {
+          "name": "C",
+          "bytes": 1475092,
+          "percent": 2.7
+        },
+        {
+          "name": "CMake",
+          "bytes": 356497,
+          "percent": 0.6
+        },
+        {
+          "name": "Python",
+          "bytes": 147890,
+          "percent": 0.3
+        },
+        {
+          "name": "Shell",
+          "bytes": 28617,
+          "percent": 0.1
+        },
+        {
+          "name": "Perl",
+          "bytes": 4250,
+          "percent": 0
+        },
+        {
+          "name": "Dockerfile",
+          "bytes": 2918,
+          "percent": 0
+        },
+        {
+          "name": "Batchfile",
+          "bytes": 1524,
+          "percent": 0
+        },
+        {
+          "name": "HTML",
+          "bytes": 583,
+          "percent": 0
+        },
+        {
+          "name": "CSS",
+          "bytes": 152,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "Commit",
+      "fullName": "elephancy/Commit",
+      "slug": "commit",
+      "url": "https://github.com/elephancy/Commit",
+      "description": "A tool that allows you to add benign commits with arbitrary GitHub dates of your choice in whichever shape you'd like to display on the GitHub contribution graph",
+      "language": "Python",
+      "createdAt": "2025-09-17T20:18:59Z",
+      "updatedAt": "2026-11-03T22:44:29Z",
+      "pushedAt": "2026-11-04T08:15:22Z",
+      "topics": [],
+      "domain": "Product",
+      "techStack": [
+        "Python",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "localStorage",
+        "Git"
+      ],
+      "features": [
+        "Browser-based GitHub contribution graph designer.",
+        "Paints contribution cells directly in the browser across single years or ranges.",
+        "Exports shell snippets of git commit commands for explicit review before running.",
+        "Stores graph designs locally with localStorage and includes a Python local runner."
+      ],
+      "about": "A tool that allows you to add benign commits with arbitrary GitHub dates of your choice in whichever shape you'd like to display on the GitHub contribution graph",
+      "languages": [
+        {
+          "name": "Python",
+          "bytes": 23347,
+          "percent": 33.1
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 22990,
+          "percent": 32.6
+        },
+        {
+          "name": "CSS",
+          "bytes": 16574,
+          "percent": 23.5
+        },
+        {
+          "name": "HTML",
+          "bytes": 7579,
+          "percent": 10.8
+        }
+      ]
+    },
+    {
+      "name": "elephancy",
+      "fullName": "elephancy/elephancy",
+      "slug": "elephancy",
+      "url": "https://github.com/elephancy/elephancy",
+      "description": "feel / selected work",
+      "language": null,
+      "createdAt": "2026-10-19T11:22:05Z",
+      "updatedAt": "2026-11-03T22:16:11Z",
+      "pushedAt": "2026-11-03T22:16:06Z",
+      "topics": [],
+      "domain": "General",
+      "techStack": [],
+      "features": [],
+      "about": "feel / selected work",
+      "languages": []
+    },
+    {
+      "name": "electron",
+      "fullName": "elephancy/electron",
+      "slug": "electron",
+      "url": "https://github.com/elephancy/electron",
+      "description": ":electron: Build cross-platform desktop apps with JavaScript, HTML, and CSS",
+      "language": "C++",
+      "createdAt": "2026-09-08T07:59:19Z",
+      "updatedAt": "2026-10-25T00:29:44Z",
+      "pushedAt": "2026-10-25T00:29:39Z",
+      "topics": [],
+      "domain": "C++",
+      "techStack": [
+        "C++"
+      ],
+      "features": [],
+      "about": ":electron: Build cross-platform desktop apps with JavaScript, HTML, and CSS",
+      "languages": [
+        {
+          "name": "C++",
+          "bytes": 4851796,
+          "percent": 52.7
+        },
+        {
+          "name": "TypeScript",
+          "bytes": 3384732,
+          "percent": 36.7
+        },
+        {
+          "name": "Objective-C++",
+          "bytes": 464471,
+          "percent": 5
+        },
+        {
+          "name": "JavaScript",
+          "bytes": 249647,
+          "percent": 2.7
+        },
+        {
+          "name": "Python",
+          "bytes": 154926,
+          "percent": 1.7
+        },
+        {
+          "name": "Objective-C",
+          "bytes": 44409,
+          "percent": 0.5
+        },
+        {
+          "name": "Shell",
+          "bytes": 38521,
+          "percent": 0.4
+        },
+        {
+          "name": "HTML",
+          "bytes": 12057,
+          "percent": 0.1
+        },
+        {
+          "name": "C",
+          "bytes": 4036,
+          "percent": 0
+        },
+        {
+          "name": "Go Template",
+          "bytes": 3380,
+          "percent": 0
+        },
+        {
+          "name": "CSS",
+          "bytes": 2458,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "Second-Chance",
+      "fullName": "elephancy/Second-Chance",
+      "slug": "second-chance",
+      "url": "https://github.com/elephancy/Second-Chance",
+      "description": "Minecraft 26.3 Fabric adventure powered by Gems of Fate",
+      "language": "Java",
+      "createdAt": "2026-10-18T17:46:38Z",
+      "updatedAt": "2026-10-24T12:55:46Z",
+      "pushedAt": "2026-10-24T12:56:57Z",
+      "topics": [],
+      "domain": "Java",
+      "techStack": [
+        "Java"
+      ],
+      "features": [],
+      "about": "Minecraft 26.3 Fabric adventure powered by Gems of Fate",
+      "languages": [
+        {
+          "name": "Java",
+          "bytes": 4373492,
+          "percent": 88
+        },
+        {
+          "name": "Python",
+          "bytes": 596993,
+          "percent": 12
+        }
+      ]
+    },
+    {
+      "name": "Gems",
+      "fullName": "elephancy/Gems",
+      "slug": "gems",
+      "url": "https://github.com/elephancy/Gems",
+      "description": "a minecraft mod that adds gems with unique powers",
+      "language": "Java",
+      "createdAt": "2025-12-18T23:40:16Z",
+      "updatedAt": "2026-10-24T12:09:28Z",
+      "pushedAt": "2026-10-24T12:09:24Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "Java",
+        "Fabric Loader",
+        "Fabric API",
+        "Gradle",
+        "GameTest"
+      ],
+      "features": [
+        "Minecraft mod adding gems with holder-specific powers.",
+        "Config UI integration through Mod Menu.",
+        "Balance configuration reload support for servers.",
+        "Unit tests plus Fabric GameTest end-to-end coverage."
+      ],
+      "about": "a minecraft mod that adds gems with unique powers",
+      "languages": [
+        {
+          "name": "Java",
+          "bytes": 2852563,
+          "percent": 99
+        },
+        {
+          "name": "Python",
+          "bytes": 28652,
+          "percent": 1
+        },
+        {
+          "name": "mcfunction",
+          "bytes": 942,
+          "percent": 0
+        }
+      ]
+    },
+    {
+      "name": "ProcessorSimulation",
+      "fullName": "elephancy/ProcessorSimulation",
+      "slug": "processorsimulation",
+      "url": "https://github.com/elephancy/ProcessorSimulation",
+      "description": "Simulating a fictional processor design and architecture using C",
+      "language": "C",
+      "createdAt": "2025-04-27T12:25:32Z",
+      "updatedAt": "2026-09-09T09:31:48Z",
+      "pushedAt": "2026-09-09T09:30:37Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "C++11",
+        "Make"
+      ],
+      "features": [
+        "Custom instruction set architecture and execution flow.",
+        "Simulated memory, register file, ALU, and control logic.",
+        "Five-stage pipeline walkthrough from fetch to writeback.",
+        "Test programs for processor behavior validation."
+      ],
+      "about": "Simulating a fictional processor design and architecture using C",
+      "languages": [
+        {
+          "name": "C",
+          "bytes": 13120,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "ChattingApplication",
+      "fullName": "elephancy/ChattingApplication",
+      "slug": "chattingapplication",
+      "url": "https://github.com/elephancy/ChattingApplication",
+      "description": "internet project",
+      "language": "Python",
+      "createdAt": "2024-10-19T21:13:16Z",
+      "updatedAt": "2026-02-04T21:16:29Z",
+      "pushedAt": "2025-12-14T18:51:19Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "Python",
+        "TCP Sockets",
+        "Threading"
+      ],
+      "features": [
+        "Socket-based client/server chat with multiple concurrent clients.",
+        "Bi-directional messaging and uppercase echo responses.",
+        "Graceful disconnect flow using a socket-close command.",
+        "Real-time console logging for chat events and broadcasts."
+      ],
+      "about": "internet project",
+      "languages": [
+        {
+          "name": "Python",
+          "bytes": 6279,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "DataAnalysis",
+      "fullName": "elephancy/DataAnalysis",
+      "slug": "dataanalysis",
+      "url": "https://github.com/elephancy/DataAnalysis",
+      "description": "random signals and noise project",
+      "language": "Jupyter Notebook",
+      "createdAt": "2024-10-19T21:15:09Z",
+      "updatedAt": "2026-02-04T21:16:32Z",
+      "pushedAt": "2025-12-14T18:49:13Z",
+      "topics": [],
+      "domain": "Data",
+      "techStack": [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Matplotlib",
+        "Seaborn",
+        "scikit-learn",
+        "SciPy"
+      ],
+      "features": [
+        "EDA workflow spanning notebooks and script-based milestones.",
+        "Z-score anomaly detection with threshold sweeps and metrics.",
+        "Custom vectorized Naive Bayes implementation from scratch.",
+        "Benchmarks against scikit-learn classifier variants."
+      ],
+      "about": "random signals and noise project",
+      "languages": [
+        {
+          "name": "Jupyter Notebook",
+          "bytes": 2278431,
+          "percent": 98.9
+        },
+        {
+          "name": "Python",
+          "bytes": 26008,
+          "percent": 1.1
+        }
+      ]
+    },
+    {
+      "name": "CommunicationTheory",
+      "fullName": "elephancy/CommunicationTheory",
+      "slug": "communicationtheory",
+      "url": "https://github.com/elephancy/CommunicationTheory",
+      "description": "Simulating the lifecycle of a signal from sampling all the way to decoding and reconstructing",
+      "language": "MATLAB",
+      "createdAt": "2024-12-05T21:52:29Z",
+      "updatedAt": "2026-02-04T21:16:35Z",
+      "pushedAt": "2025-12-14T18:48:26Z",
+      "topics": [],
+      "domain": "Data",
+      "techStack": [
+        "MATLAB",
+        "Signal Processing",
+        "Huffman Coding",
+        "Binary Symmetric Channel"
+      ],
+      "features": [
+        "Uniform and mu-law quantization across sampled signals.",
+        "SQNR, MAE, variance, and compression-rate analysis.",
+        "Huffman encode/decode stage in the transmission pipeline.",
+        "Signal reconstruction with visual and statistical comparisons."
+      ],
+      "about": "Simulating the lifecycle of a signal from sampling all the way to decoding and reconstructing",
+      "languages": [
+        {
+          "name": "MATLAB",
+          "bytes": 16547,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "ChannelCoding",
+      "fullName": "elephancy/ChannelCoding",
+      "slug": "channelcoding",
+      "url": "https://github.com/elephancy/ChannelCoding",
+      "description": null,
+      "language": "MATLAB",
+      "createdAt": "2025-05-14T16:54:50Z",
+      "updatedAt": "2026-02-04T21:16:38Z",
+      "pushedAt": "2025-12-14T18:48:15Z",
+      "topics": [],
+      "domain": "Data",
+      "techStack": [
+        "MATLAB",
+        "Convolutional Codes",
+        "Viterbi Decoding",
+        "Binary Symmetric Channel"
+      ],
+      "features": [
+        "Incremental redundancy simulation for a channel coding pipeline.",
+        "Evaluates BER and throughput across BSC error probabilities.",
+        "Supports punctured coding rates from 8/9 to 1/2.",
+        "Produces decoded video outputs and comparison plots."
+      ],
+      "about": "Public repository metadata captured in this snapshot.",
+      "languages": [
+        {
+          "name": "MATLAB",
+          "bytes": 7962,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "SystemsAndControl",
+      "fullName": "elephancy/SystemsAndControl",
+      "slug": "systemsandcontrol",
+      "url": "https://github.com/elephancy/SystemsAndControl",
+      "description": "systems and control project",
+      "language": "MATLAB",
+      "createdAt": "2024-12-01T19:23:13Z",
+      "updatedAt": "2026-02-04T21:16:46Z",
+      "pushedAt": "2025-12-14T18:40:38Z",
+      "topics": [],
+      "domain": "Systems",
+      "techStack": [
+        "MATLAB",
+        "Control System Toolbox"
+      ],
+      "features": [
+        "Transfer function and state-space modeling utilities.",
+        "Step and impulse response analysis workflows.",
+        "Bode, Nyquist, and root-locus visualizations.",
+        "Lead and lag compensator design experiments."
+      ],
+      "about": "systems and control project",
+      "languages": [
+        {
+          "name": "MATLAB",
+          "bytes": 2348,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "AES",
+      "fullName": "elephancy/AES",
+      "slug": "aes",
+      "url": "https://github.com/elephancy/AES",
+      "description": "implementing Rijndael's AES in assembly",
+      "language": "Assembly",
+      "createdAt": "2024-12-07T11:47:57Z",
+      "updatedAt": "2026-02-04T21:16:50Z",
+      "pushedAt": "2025-12-14T18:39:45Z",
+      "topics": [],
+      "domain": "Security",
+      "techStack": [
+        "Assembly",
+        "AES-128"
+      ],
+      "features": [
+        "AES-128 encryption flow implemented at the assembly level.",
+        "Full round operations including SubBytes and MixColumns.",
+        "Key expansion algorithm included alongside encryption steps.",
+        "Structured for readability and cryptography learning."
+      ],
+      "about": "implementing Rijndael's AES in assembly",
+      "languages": [
+        {
+          "name": "Assembly",
+          "bytes": 21423,
+          "percent": 100
+        }
+      ]
+    },
+    {
+      "name": "OldPortfolio",
+      "fullName": "elephancy/OldPortfolio",
+      "slug": "oldportfolio",
+      "url": "https://github.com/elephancy/OldPortfolio",
+      "description": "website for myself",
+      "language": "JavaScript",
+      "createdAt": "2025-04-17T10:22:10Z",
+      "updatedAt": "2026-04-11T11:13:49Z",
+      "pushedAt": "2025-12-14T18:38:13Z",
+      "topics": [],
+      "domain": "Frontend",
+      "techStack": [
+        "React",
+        "JSX",
+        "React Router",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Cloudflare Pages"
+      ],
+      "features": [
+        "Responsive portfolio surface with modern animations.",
+        "Projects section with live previews and GitHub links.",
+        "Downloadable CV and resume flow.",
+        "Contact section for direct outreach."
+      ],
+      "about": "website for myself",
+      "languages": [
+        {
+          "name": "JavaScript",
+          "bytes": 25259,
+          "percent": 87.5
+        },
+        {
+          "name": "HTML",
+          "bytes": 2634,
+          "percent": 9.1
+        },
+        {
+          "name": "CSS",
+          "bytes": 966,
+          "percent": 3.3
+        }
+      ]
+    },
+    {
+      "name": "Pharmacy",
+      "fullName": "elephancy/Pharmacy",
+      "slug": "pharmacy",
+      "url": "https://github.com/elephancy/Pharmacy",
+      "description": "a mock pharmacy android app",
+      "language": "Kotlin",
+      "createdAt": "2025-10-19T11:34:58Z",
+      "updatedAt": "2026-02-04T21:16:08Z",
+      "pushedAt": "2025-12-14T17:17:31Z",
+      "topics": [],
+      "domain": "Product",
+      "techStack": [
+        "Kotlin",
+        "Jetpack Compose",
+        "Firebase Auth",
+        "Cloud Firestore",
+        "Firebase Storage",
+        "OSMDroid",
+        "Linphone SDK"
+      ],
+      "features": [
+        "Patient and pharmacist role-based Android workflow.",
+        "Medication browsing, cart flow, and order placement.",
+        "In-app SIP calling between patients and pharmacists.",
+        "Map view and pharmacist availability management."
+      ],
+      "about": "a mock pharmacy android app",
+      "languages": [
+        {
+          "name": "Kotlin",
+          "bytes": 109784,
+          "percent": 100
+        }
+      ]
+    }
+  ]
+}

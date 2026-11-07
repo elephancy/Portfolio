@@ -19,6 +19,7 @@ type RepoItem = {
   domain: string;
   techStack: string[];
   features: string[];
+  snapshotAt?: string;
 };
 
 type ApiResponse = {
@@ -386,7 +387,9 @@ export default function CareerCalendar() {
             <ProjectCard
               title={activeRepo.name}
               shortDesc={activeRepo.description ?? 'Repository with documented implementation details.'}
-              longDesc={staticFallback && !activeRepoDetail
+              longDesc={activeRepo.snapshotAt
+                ? `GitHub snapshot from ${formatDate(activeRepo.snapshotAt)}. Created ${formatDate(activeRepo.createdAt)} and last updated ${formatDate(activeRepo.pushedAt)}.`
+                : staticFallback && !activeRepoDetail
                 ? `Portfolio record last updated ${formatDate(activeRepo.updatedAt)}.`
                 : `Created ${formatDate(activeRepo.createdAt)} and last updated ${formatDate(activeRepo.pushedAt)}.`}
               year={new Date(activeRepo.pushedAt).getFullYear()}

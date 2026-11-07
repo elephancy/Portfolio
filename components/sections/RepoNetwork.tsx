@@ -533,7 +533,7 @@ export function RepoNetwork({
       </section>
 
       <aside className={styles.networkInspector}>
-        <span>{githubRepo.domain}</span>
+        <span>{githubRepo.domain}{githubRepo.snapshotAt ? ` · GitHub snapshot ${new Date(githubRepo.snapshotAt).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}` : ''}</span>
         <h3>{selectedProject.title}</h3>
         <p>{githubRepo.about}</p>
 

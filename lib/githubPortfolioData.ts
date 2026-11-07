@@ -1,4 +1,5 @@
 import type { PortfolioProject } from '../data/projects';
+import githubSnapshot from '../data/github-repos.snapshot.json' with { type: 'json' };
 
 const OWNER = 'elephancy';
 // Retired projects are kept in source control, but no longer shown in the portfolio.
@@ -50,6 +51,7 @@ export type RepoView = {
   features: string[];
   about: string;
   languages: RepoLanguage[];
+  snapshotAt?: string;
 };
 
 type CuratedRepoData = {
@@ -251,6 +253,30 @@ function githubHeaders() {
   };
 }
 
+let retryGitHubAt = 0;
+
+async function githubFetch(url: string, options: RequestInit & { next: { revalidate: number } }) {
+  if (Date.now() < retryGitHubAt) throw new Error('GitHub retry is deferred');
+  const response = await fetch(url, options);
+  if (response.status === 403 || response.status === 429) {
+    const numericHeader = (name: string) => {
+      const value = response.headers.get(name);
+      const parsed = value !== null && /^\d+$/.test(value) ? Number(value) : NaN;
+      return Number.isSafeInteger(parsed) ? parsed : undefined;
+    };
+    const remaining = numericHeader('x-ratelimit-remaining');
+    const reset = numericHeader('x-ratelimit-reset');
+    const retryAfter = numericHeader('retry-after');
+    retryGitHubAt = Math.max(Date.now() + 60_000, remaining === 0 && reset ? reset * 1000 : 0, retryAfter ? Date.now() + retryAfter * 1000 : 0);
+    console.warn('portfolio-github-request-blocked', {
+      status: response.status, remaining, reset, retryAfter,
+      reason: remaining === 0 ? 'primary-rate-limit' : 'forbidden-or-secondary-limit',
+      retryAt: new Date(retryGitHubAt).toISOString(),
+    });
+  }
+  return response;
+}
+
 function slugify(value: string) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
@@ -281,7 +307,7 @@ function toTitle(value: string) {
 
 async function fetchRootContents(repoRef: GithubRepoRef) {
   try {
-    const response = await fetch(`${repoApiBase(repoRef)}/contents`, {
+    const response = await githubFetch(`${repoApiBase(repoRef)}/contents`, {
       headers: githubHeaders(),
       next: { revalidate: 3600 },
     });
@@ -295,7 +321,7 @@ async function fetchRootContents(repoRef: GithubRepoRef) {
 
 async function fetchReadme(repoRef: GithubRepoRef) {
   try {
-    const response = await fetch(`${repoApiBase(repoRef)}/readme`, {
+    const response = await githubFetch(`${repoApiBase(repoRef)}/readme`, {
       headers: {
         ...githubHeaders(),
         Accept: 'application/vnd.github.raw+json',
@@ -310,7 +336,7 @@ async function fetchReadme(repoRef: GithubRepoRef) {
 
 async function fetchLanguages(repoRef: GithubRepoRef, fallbackLanguage: string | null) {
   try {
-    const response = await fetch(`${repoApiBase(repoRef)}/languages`, {
+    const response = await githubFetch(`${repoApiBase(repoRef)}/languages`, {
       headers: githubHeaders(),
       next: { revalidate: 3600 },
     });
@@ -423,7 +449,7 @@ function repoView(repo: GithubRepo, readme = '', rootItems: GithubContent[] = []
 }
 
 export async function fetchGithubRepos() {
-  const response = await fetch(`https://api.github.com/users/${OWNER}/repos?per_page=100&sort=updated`, {
+  const response = await githubFetch(`https://api.github.com/users/${OWNER}/repos?per_page=100&sort=updated`, {
     headers: githubHeaders(),
     next: { revalidate: 3600 },
   });
@@ -434,6 +460,10 @@ export async function fetchGithubRepos() {
   }
 
   const primaryRepos = (await response.json()) as GithubRepo[];
+  return publicGithubRepoSummaries(primaryRepos);
+}
+
+export function publicGithubRepoSummaries(primaryRepos: GithubRepo[]): RepoView[] {
   const seenRepos = new Set<string>();
   const filtered = primaryRepos.filter((repo) => {
     const repoKey = (repo.full_name || repo.name).toLowerCase();
@@ -450,7 +480,7 @@ export async function fetchGithubRepos() {
 
 export async function fetchGithubRepoDetails(name: string): Promise<RepoView | null> {
   if (!/^[a-z0-9][a-z0-9._-]{0,99}$/i.test(name) || !visibleRepoName(name)) return null;
-  const response = await fetch(`${repoApiBase({ owner: OWNER, name })}`, {
+  const response = await githubFetch(`${repoApiBase({ owner: OWNER, name })}`, {
     headers: githubHeaders(), next: { revalidate: 3600 },
   });
   if (response.status === 404) return null;
@@ -480,6 +510,12 @@ function staticGithubRepos(projects: readonly PortfolioProject[]): RepoView[] {
   }));
 }
 
+function snapshotGithubRepos(): RepoView[] {
+  return githubSnapshot.repositories
+    .filter((repo) => visibleRepoName(repo.name) && repo.fullName.toLowerCase() === `${OWNER}/${repo.name}`.toLowerCase())
+    .map((repo) => ({ ...repo, snapshotAt: githubSnapshot.generatedAt }));
+}
+
 export async function githubRepositoryResponse(name: string | null, projects: readonly PortfolioProject[]): Promise<Response> {
   try {
     if (name !== null) {
@@ -489,8 +525,19 @@ export async function githubRepositoryResponse(name: string | null, projects: re
     return Response.json({ repos: await fetchGithubRepos(), source: 'github-api-live' });
   } catch {
     console.warn('portfolio-github-unavailable');
-    return name !== null
-      ? Response.json({ error: 'Repository details are temporarily unavailable.' }, { status: 503 })
-      : Response.json({ repos: staticGithubRepos(projects), source: 'portfolio-static-fallback', warning: 'GitHub data is temporarily unavailable.' });
+    const snapshotRepos = snapshotGithubRepos();
+    const snapshotInfo = {
+      source: 'github-public-snapshot', snapshotAt: githubSnapshot.generatedAt,
+      snapshotSource: githubSnapshot.sources.repositories,
+      warning: 'Live GitHub data is unavailable; showing the dated public repository snapshot.',
+    };
+    if (name !== null) {
+      const repo = snapshotRepos.find((item) => item.name.toLowerCase() === name.toLowerCase());
+      return repo
+        ? Response.json({ repo, ...snapshotInfo })
+        : Response.json({ error: 'Repository details are temporarily unavailable.' }, { status: 503 });
+    }
+    if (snapshotRepos.length > 0) return Response.json({ repos: snapshotRepos, ...snapshotInfo });
+    return Response.json({ repos: staticGithubRepos(projects), source: 'portfolio-static-fallback', warning: 'GitHub data is temporarily unavailable.' });
   }
 }
