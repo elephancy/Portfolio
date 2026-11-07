@@ -1,3 +1,3 @@
 // This static script runs before the body paints. It only hides the initial
 // prompt for an existing valid choice; analytics still require React consent.
-export const consentBootstrap = `(()=>{try{const choice=window.localStorage.getItem("elfeel-analytics-consent");if(choice==="accepted"||choice==="declined"){document.documentElement.setAttribute("data-elfeel-saved-consent","");}}catch{}})();`;
+export const consentBootstrap = `(()=>{document.documentElement.setAttribute("data-elfeel-consent-ui","");try{const declined=new URL(window.location.href).searchParams.get("elfeel-analytics")==="declined"||window.history.state?.elfeelAnalyticsDeclined===true;const choice=declined?"declined":window.localStorage.getItem("elfeel-analytics-consent");if(choice==="accepted"||choice==="declined"){document.documentElement.setAttribute("data-elfeel-saved-consent","");}}catch{}})();`;

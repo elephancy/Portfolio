@@ -32,6 +32,6 @@ jobs:
       - name: Verify portfolio repository visibility
         run: node --test scripts/github-portfolio.test.mjs
       - name: Verify consent preference bootstrap
-        run: node --test scripts/consent-bootstrap.test.mjs
+        run: node --test scripts/consent-bootstrap.test.mjs scripts/analytics-consent.test.mjs
       - name: Build and typecheck Cloudflare Worker
         run: npm run build:cloudflare

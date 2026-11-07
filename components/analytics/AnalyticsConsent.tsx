@@ -8,10 +8,11 @@ import {
   trackEvent,
 } from "../../lib/analytics";
 import styles from "./analyticsConsent.module.css";
-
-type ConsentState = "accepted" | "declined" | null;
-
-const STORAGE_KEY = "elfeel-analytics-consent";
+import {
+  type AnalyticsConsent as ConsentState,
+  restoreAnalyticsConsent,
+  saveAnalyticsConsent,
+} from "../../lib/analyticsConsent";
 
 export default function AnalyticsConsent() {
   const scriptSrc =
@@ -26,12 +27,7 @@ export default function AnalyticsConsent() {
 
   useEffect(() => {
     const openSettings = () => setSettingsOpen(true);
-    let stored: string | null = null;
-    try {
-      stored = window.localStorage.getItem(STORAGE_KEY);
-    } catch {
-      // Keep the prompt available when storage is blocked.
-    }
+    const stored = restoreAnalyticsConsent();
     if (stored === "accepted" || stored === "declined") {
       setConsent(stored);
       setSettingsOpen(false);
@@ -149,15 +145,13 @@ export default function AnalyticsConsent() {
 
   const saveConsent = (nextConsent: Exclude<ConsentState, null>) => {
     const analyticsWasLoaded = consent === "accepted";
-    try {
-      window.localStorage.setItem(STORAGE_KEY, nextConsent);
-    } catch {
-      // The explicit choice still applies for this page when storage is blocked.
-    }
+    const declineUrl = saveAnalyticsConsent(nextConsent);
     setConsent(nextConsent);
     setSettingsOpen(false);
 
-    if (analyticsWasLoaded && nextConsent === "declined") {
+    if (declineUrl) {
+      window.location.replace(declineUrl);
+    } else if (analyticsWasLoaded && nextConsent === "declined") {
       window.location.reload();
     }
   };
@@ -207,7 +201,7 @@ export default function AnalyticsConsent() {
               type into Elly. They stay disabled unless you accept.
             </p>
             <p className={styles.necessary}>
-              Your choice is stored locally so the site can remember it.
+              Your choice is remembered locally when your browser permits it.
             </p>
             <div className={styles.actions}>
               <button type="button" onClick={() => saveConsent("declined")}>

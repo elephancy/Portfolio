@@ -558,7 +558,10 @@ export default function WorkspaceOS() {
     if (!workspaceReady) return;
 
     const url = new URL(window.location.href);
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(url.search);
+    // Update only workspace-owned parameters; retain privacy fallbacks and
+    // campaign parameters, together with Next.js/browser history state.
+    ['project', 'mode', 'status', 'q', 'view'].forEach((key) => params.delete(key));
 
     if (selectedId !== 'portfolio') params.set('project', selectedId);
     if (mode !== 'All') params.set('mode', mode.toLowerCase());
@@ -567,7 +570,7 @@ export default function WorkspaceOS() {
     if (activeWindow === 'graph') params.set('view', 'graph');
 
     url.search = params.toString();
-    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
   }, [activeWindow, mode, query, repoFilter, selectedId, workspaceReady]);
 
   useEffect(() => {

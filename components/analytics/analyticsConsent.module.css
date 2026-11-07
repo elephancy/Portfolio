@@ -9,6 +9,14 @@
   backdrop-filter: blur(5px);
 }
 
+.backdrop[data-initial-consent] {
+  display: none;
+}
+
+:global(html[data-elfeel-consent-ui]) .backdrop[data-initial-consent] {
+  display: grid;
+}
+
 :global(html[data-elfeel-saved-consent]) .backdrop[data-initial-consent] {
   display: none;
 }
