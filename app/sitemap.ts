@@ -1,23 +1,21 @@
 import type { MetadataRoute } from "next";
 
 // Public routes hosted across the verified elfeel.me domain. Keep account,
-// admin, API, user profile, and session-specific pages out of search results.
+// admin, API, user profile, interactive study tools, enrollment, and archived
+// product hosts out of this public URL inventory. Portfolio case studies remain.
 const publicRoutes: ReadonlyArray<readonly [host: string, paths: readonly string[]]> = [
   ["https://academy.elfeel.me", ["/"]],
   ["https://anubis.elfeel.me", ["/", "/hints", "/leaderboard"]],
   ["https://bachelor.elfeel.me", ["/", "/demo"]],
   ["https://commit.elfeel.me", ["/"]],
-  ["https://curate.elfeel.me", ["/"]],
   ["https://doompedia.elfeel.me", ["/"]],
-  ["https://foundroll.elfeel.me", ["/"]],
   ["https://ocpp.elfeel.me", ["/"]],
   ["https://planora.elfeel.me", ["/", "/faq", "/privacy"]],
   ["https://rps.elfeel.me", ["/", "/rules", "/privacy", "/cookies"]],
   [
     "https://scenechain.elfeel.me",
-    ["/", "/how-it-works", "/practice", "/privacy", "/research/consent"],
+    ["/", "/how-it-works", "/privacy"],
   ],
-  ["https://situationroom.elfeel.me", ["/"]],
   ["https://systemforge.elfeel.me", ["/"]],
   ["https://tariffguard.elfeel.me", ["/"]],
   [
