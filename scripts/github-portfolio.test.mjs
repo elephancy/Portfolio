@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFile } from 'node:fs/promises';
 import { fetchGithubRepos, fetchGithubRepoDetails, githubRepositoryResponse } from '../lib/githubPortfolioData.ts';
 import { projects } from '../data/projects.ts';
 import { loadGithubRepoDetails } from '../lib/githubRepoClient.ts';
+import { refreshGithubSnapshot } from './refresh-github-snapshot.mjs';
 
 function repository(name, extra = {}) {
   return {
@@ -107,15 +109,18 @@ test('retired, malformed, private and different-owner detail requests never disc
   assert.equal(requests.length, 2);
 });
 
-test('an upstream list outage serves a real labelled static fallback; details fail without secret diagnostics', async (t) => {
+test('an upstream list outage serves the dated public snapshot; unknown details fail without secret diagnostics', async (t) => {
   const warn = t.mock.method(console, 'warn', () => {});
   t.mock.method(globalThis, 'fetch', async () => new Response('sensitive upstream body must not be returned', { status: 403 }));
   const response = await githubRepositoryResponse(null, projects);
   const payload = await response.json();
   assert.equal(response.status, 200);
-  assert.equal(payload.source, 'portfolio-static-fallback');
-  assert.equal(payload.repos.length, projects.length);
+  assert.equal(payload.source, 'github-public-snapshot');
+  assert.equal(payload.repos.length, 26);
   assert.ok(payload.repos.length > 0);
+  assert.ok(Number.isFinite(Date.parse(payload.snapshotAt)));
+  assert.equal(payload.snapshotSource, 'https://api.github.com/users/elephancy/repos?per_page=100&sort=updated');
+  assert.ok(payload.repos.every((repo) => repo.snapshotAt === payload.snapshotAt));
   assert.ok(payload.repos.every((repo) => !/^(?:Curate|Found-?Roll|Situation-?Room|TariffGuard)$/i.test(repo.name)));
   assert.ok(payload.repos.some((repo) => repo.name === 'Planora'));
   assert.ok(!JSON.stringify(payload).includes('sensitive upstream body'));
@@ -125,18 +130,197 @@ test('an upstream list outage serves a real labelled static fallback; details fa
   assert.ok(warn.mock.calls.some(({ arguments: args }) => args[0] === 'portfolio-github-list-http' && args[1].status === 403));
 });
 
+test('the versioned snapshot contains only public project fields, accurate language arithmetic and no retired identities', async () => {
+  const text = await readFile(new URL('../data/github-repos.snapshot.json', import.meta.url), 'utf8');
+  const snapshot = JSON.parse(text);
+  assert.equal(snapshot.schemaVersion, 1);
+  assert.equal(snapshot.owner, 'elephancy');
+  assert.ok(Number.isFinite(Date.parse(snapshot.generatedAt)));
+  assert.equal(snapshot.repositories.length, 26);
+  assert.ok(!/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/.test(text));
+  assert.ok(!/\b(?:gh[pousr]_[a-zA-Z0-9]{20,}|github_pat_[a-zA-Z0-9_]+)\b/.test(text));
+  for (const repo of snapshot.repositories) {
+    assert.equal(repo.fullName, `elephancy/${repo.name}`);
+    assert.equal(repo.url, `https://github.com/${repo.fullName}`);
+    assert.ok(!/^(?:Curate|Found-?Roll|Situation-?Room|TariffGuard)$/i.test(repo.name));
+    assert.ok(Number.isFinite(Date.parse(repo.createdAt)) && Number.isFinite(Date.parse(repo.pushedAt)));
+    const total = repo.languages.reduce((sum, language) => sum + language.bytes, 0);
+    for (const language of repo.languages) {
+      assert.ok(Number.isSafeInteger(language.bytes) && language.bytes > 0);
+      assert.ok(Math.abs(language.percent - 100 * language.bytes / total) <= 0.051);
+    }
+    assert.ok(!repo.features.includes('Repository maintained with regular updates and clear structure.'));
+  }
+});
+
+test('rate-limit reset is respected and known snapshot details remain useful without another upstream request', async (t) => {
+  const api = await import('../lib/githubPortfolioData.ts?test=rate-limit-snapshot');
+  const now = Date.now();
+  let clock = now;
+  t.mock.method(Date, 'now', () => clock);
+  t.mock.method(console, 'warn', () => {});
+  let calls = 0;
+  const reset = Math.ceil(now / 1000) + 180;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls++;
+    return calls === 1
+      ? new Response('body must not leak', { status: 403, headers: { 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': String(reset) } })
+      : Response.json([repository('Recovered')]);
+  });
+  const first = await (await api.githubRepositoryResponse(null, projects)).json();
+  assert.equal(first.source, 'github-public-snapshot');
+  const detail = await (await api.githubRepositoryResponse('Planora', projects)).json();
+  assert.equal(detail.source, 'github-public-snapshot');
+  assert.equal(detail.repo.name, 'Planora');
+  assert.ok(detail.repo.languages.length > 1);
+  clock = reset * 1000 - 1;
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-public-snapshot');
+  assert.equal(calls, 1);
+  clock = reset * 1000 + 1;
+  const recovered = await (await api.githubRepositoryResponse(null, projects)).json();
+  assert.equal(recovered.source, 'github-api-live');
+  assert.deepEqual(recovered.repos.map((repo) => repo.name), ['Recovered']);
+  assert.equal(calls, 2);
+});
+
+test('a live not-found or newly private repository does not get revived from the snapshot', async (t) => {
+  const api = await import('../lib/githubPortfolioData.ts?test=snapshot-private');
+  t.mock.method(globalThis, 'fetch', async () => new Response('', { status: 404 }));
+  assert.equal((await api.githubRepositoryResponse('Planora', projects)).status, 404);
+  t.mock.method(globalThis, 'fetch', async () => Response.json(repository('Planora', { private: true })));
+  assert.equal((await api.githubRepositoryResponse('Planora', projects)).status, 404);
+});
+
+test('secondary retry-after is respected without discarding dated repository data', async (t) => {
+  const api = await import('../lib/githubPortfolioData.ts?test=secondary-retry-after');
+  let clock = Date.now();
+  t.mock.method(Date, 'now', () => clock);
+  t.mock.method(console, 'warn', () => {});
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls++;
+    return new Response('', { status: 429, headers: { 'x-ratelimit-remaining': '25', 'retry-after': '120' } });
+  });
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-public-snapshot');
+  clock += 119_999;
+  assert.equal((await api.githubRepositoryResponse('Planora', projects)).status, 200);
+  assert.equal(calls, 1);
+  clock += 2;
+  await api.githubRepositoryResponse(null, projects);
+  assert.equal(calls, 2);
+});
+
+test('concurrent blocked responses cannot shorten an existing longer retry deadline', async (t) => {
+  const api = await import('../lib/githubPortfolioData.ts?test=concurrent-backoff');
+  let clock = Date.now();
+  t.mock.method(Date, 'now', () => clock);
+  t.mock.method(console, 'warn', () => {});
+  let calls = 0;
+  const pending = [];
+  t.mock.method(globalThis, 'fetch', () => {
+    calls++;
+    return calls <= 2
+      ? new Promise((resolve) => pending.push(resolve))
+      : Promise.resolve(Response.json([repository('Recovered')]));
+  });
+  const first = api.githubRepositoryResponse(null, projects);
+  const second = api.githubRepositoryResponse(null, projects);
+  const reset = Math.ceil(clock / 1000) + 180;
+  pending[0](new Response('', { status: 403, headers: { 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': String(reset) } }));
+  await first;
+  pending[1](new Response('', { status: 429, headers: { 'retry-after': '60' } }));
+  await second;
+  clock += 61_000;
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-public-snapshot');
+  assert.equal(calls, 2);
+  clock = reset * 1000 + 1;
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-api-live');
+  assert.equal(calls, 3);
+});
+
+test('manual refresh uses public requests only and writes complete, retired-filtered source metadata', async () => {
+  let calls = 0;
+  let output;
+  const report = await refreshGithubSnapshot({
+    fetcher: async (url, options) => {
+      calls++;
+      assert.equal(new URL(url).hostname, 'api.github.com');
+      assert.equal(Object.keys(options.headers).some((key) => key.toLowerCase() === 'authorization'), false);
+      const body = url.includes('/users/')
+        ? [repository('Planora'), repository('FreshProject'), repository('TariffGuard')]
+        : { TypeScript: 75, CSS: 25 };
+      return Response.json(body, { headers: { 'x-ratelimit-remaining': String(60 - calls) } });
+    },
+    writer: async (_url, text) => { output = JSON.parse(text); },
+    now: () => new Date('2026-11-07T00:00:00Z'),
+  });
+  assert.equal(report.publicRequests, 3);
+  assert.equal(output.repositories.length, 2);
+  assert.equal(output.generatedAt, '2026-11-07T00:00:00.000Z');
+  assert.deepEqual(output.repositories[0].languages.map(({ percent }) => percent), [75, 25]);
+  assert.equal(output.repositories[0].createdAt, '2026-01-01T00:00:00Z');
+});
+
+test('manual refresh stops before quota exhaustion and never overwrites a snapshot after incomplete collection', async () => {
+  for (const scenario of ['low-quota', 'http-failure', 'missing-quota', 'pagination']) {
+    let calls = 0;
+    let writes = 0;
+    await assert.rejects(refreshGithubSnapshot({
+      fetcher: async () => {
+        calls++;
+        if (scenario === 'http-failure' && calls > 1) return new Response('', { status: 403 });
+        return Response.json(calls === 1 ? [repository('Planora'), repository('FreshProject')] : {}, {
+          headers: scenario === 'missing-quota' ? {} : {
+            'x-ratelimit-remaining': scenario === 'low-quota' ? '1' : '59',
+            ...(scenario === 'pagination' ? { link: '<https://api.github.com/users/elephancy/repos?page=2>; rel="next"' } : {}),
+          },
+        });
+      },
+      writer: async () => { writes++; },
+    }));
+    assert.equal(writes, 0, scenario);
+    assert.equal(calls, scenario === 'http-failure' ? 2 : 1, scenario);
+  }
+});
+
 test('client detail loads deduplicate successful requests and retry transient failures', async (t) => {
   let calls = 0;
   t.mock.method(globalThis, 'fetch', async (input) => {
     calls++;
     const name = new URL(String(input), 'https://elfeel.me').searchParams.get('repo');
     if (name === 'ClientRetry' && calls === 1) return new Response('', { status: 503 });
-    return Response.json({ repo: { name, fullName: `elephancy/${name}` } });
+    return Response.json({ repo: { name, fullName: `elephancy/${name}` }, source: 'github-api-live' });
   });
   assert.equal(await loadGithubRepoDetails('ClientRetry'), null);
   const [left, right] = await Promise.all([loadGithubRepoDetails('ClientRetry'), loadGithubRepoDetails('clientretry')]);
   assert.equal(left.name, 'ClientRetry');
   assert.equal(left, right);
   assert.equal((await loadGithubRepoDetails('ClientRetry')), left);
+  assert.equal(calls, 2);
+});
+
+test('a dated client fallback stays provisional so reselection can recover live details', async (t) => {
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls++;
+    return Response.json({
+      repo: {
+        name: 'ClientSnapshotRecovery', fullName: 'elephancy/ClientSnapshotRecovery',
+        about: calls === 1 ? 'dated snapshot detail' : 'current live detail',
+        ...(calls === 1 ? { snapshotAt: '2026-11-07T00:00:00Z' } : {}),
+      },
+      source: calls === 1 ? 'github-public-snapshot' : 'github-api-live',
+    });
+  });
+  const [first, concurrent] = await Promise.all([
+    loadGithubRepoDetails('ClientSnapshotRecovery'), loadGithubRepoDetails('ClientSnapshotRecovery'),
+  ]);
+  assert.equal(first.about, 'dated snapshot detail');
+  assert.equal(concurrent, first);
+  assert.equal(calls, 1);
+  const recovered = await loadGithubRepoDetails('ClientSnapshotRecovery');
+  assert.equal(recovered.about, 'current live detail');
+  assert.equal(calls, 2);
+  assert.equal(await loadGithubRepoDetails('ClientSnapshotRecovery'), recovered);
   assert.equal(calls, 2);
 });

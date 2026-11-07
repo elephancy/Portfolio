@@ -14,12 +14,15 @@ export async function loadGithubRepoDetails(name: string): Promise<RepoView | nu
   const request = fetch(`/api/github/repos?repo=${encodeURIComponent(name)}`)
     .then(async (response) => {
       if (!response.ok) return null;
-      const payload = await response.json() as { repo?: RepoView };
+      const payload = await response.json() as { repo?: RepoView; source?: string };
       const repo = payload.repo;
       if (!repo || repo.name.toLowerCase() !== key || repo.fullName.toLowerCase() !== `elephancy/${key}`) return null;
-      // Reuse successful details during this page visit; failed loads can retry.
-      if (details.size >= 100) details.delete(details.keys().next().value!);
-      details.set(key, repo);
+      // Reuse live details during this visit. A dated fallback stays provisional
+      // so selecting the repository again can observe upstream recovery.
+      if (payload.source === 'github-api-live' && !repo.snapshotAt) {
+        if (details.size >= 100) details.delete(details.keys().next().value!);
+        details.set(key, repo);
+      }
       return repo;
     })
     .catch(() => null)

@@ -247,6 +247,14 @@ function getProjectUpdatedAt(project: PortfolioProject, githubRepos: RepoView[])
   return githubRepo?.pushedAt ?? githubRepo?.updatedAt ?? project.updatedAt;
 }
 
+function projectUpdateLabel(project: PortfolioProject, githubRepos: RepoView[]) {
+  const repo = findGithubRepo(project, githubRepos);
+  const updated = `Last updated ${formatDate(getProjectUpdatedAt(project, githubRepos))}`;
+  return repo?.snapshotAt
+    ? `${updated} · GitHub snapshot ${new Date(repo.snapshotAt).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}`
+    : updated;
+}
+
 function getProjectLanguages(project: PortfolioProject, githubRepos: RepoView[]) {
   const githubLanguages = findGithubRepo(project, githubRepos)?.languages.slice(0, 3);
   if (githubLanguages?.length) {
@@ -1100,7 +1108,7 @@ export default function WorkspaceOS() {
                 <small>{project.domain}</small>
                 <p>{project.description}</p>
                 <span className={styles.cardMeta}>
-                  <CalendarDays size={13} /> Last updated {formatDate(getProjectUpdatedAt(project, githubRepos))}
+                  <CalendarDays size={13} /> {projectUpdateLabel(project, githubRepos)}
                 </span>
                 <ProjectLanguages project={project} githubRepos={githubRepos} />
                 <LiveCardPreview project={project} />
@@ -1118,7 +1126,7 @@ export default function WorkspaceOS() {
 
         <section className={styles.featured} id="featured" aria-labelledby="featured-title">
           <div className={styles.featuredCopy}>
-            <span className={styles.featuredMeta}>Last updated {formatDate(getProjectUpdatedAt(selectedProject, githubRepos))}</span>
+            <span className={styles.featuredMeta}>{projectUpdateLabel(selectedProject, githubRepos)}</span>
             <h2 id="featured-title">{selectedProject.id === 'scheduler' ? 'Planora' : selectedProject.title}</h2>
             <a href={selectedProject.liveUrl ?? selectedProject.repoUrl} target="_blank" rel="noreferrer" data-analytics-project={selectedProject.id} data-analytics-source="featured-title">
               {selectedProject.domain ?? selectedProject.repoName}
