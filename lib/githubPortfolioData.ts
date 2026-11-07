@@ -1,6 +1,6 @@
 const OWNER = 'elephancy';
 // Retired projects are kept in source control, but no longer shown in the portfolio.
-const RETIRED_PROJECT_NAMES = new Set(['curate', 'foundroll', 'situationroom']);
+const RETIRED_PROJECT_NAMES = new Set(['curate', 'foundroll', 'situationroom', 'tariffguard']);
 
 type GithubRepo = {
   name: string;

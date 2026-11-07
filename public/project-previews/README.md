@@ -5,7 +5,7 @@ without changing application code by keeping its filename stable.
 
 ## Demo videos
 
-Planora, TypeShift, Doompedia, OCPP Demo, Anubis, MANTA, and TariffGuard use
+Planora, TypeShift, Doompedia, OCPP Demo, Anubis, and MANTA use
 browser-optimized MP4 clips with fast-start metadata. Portfolio uses static
 imagery.
 
@@ -17,7 +17,6 @@ imagery.
 | OCPP Demo | `ocpp-demo.mp4` | Sign in, inspect fleet/station status, then open the live event stream. |
 | Anubis | `anubis.mp4` | Tour the live signal archive and viewing notes. |
 | MANTA | `bachelor.mp4` | Move from the thesis question into the interactive Android research prototype. |
-| TariffGuard | `tariffguard.mp4` | Tour session operations, alert triage, and the daily audit report using the built-in mock data. |
 
 The matching PNG is used as each video poster and fallback. Portfolio uses
 `Portfolio.png` for its recursive zoom, so future screenshots automatically
@@ -32,4 +31,3 @@ update every layer.
 - `OCPP-Demo.png`
 - `Anubis.png`
 - `Bachelor.png`
-- `TariffGuard.png`

@@ -81,7 +81,6 @@ const fallbackLanguages: Record<string, string[]> = {
   "ocpp-demo": ["Python", "TypeScript", "CSS"],
   anubis: ["TypeScript", "MDX", "CSS"],
   bachelor: ["Python", "Kotlin", "TypeScript"],
-  tariffguard: ["TypeScript", "Python", "HCL"],
   commit: ["Python", "JavaScript", "CSS"],
   rps: ["JavaScript", "CSS", "HTML"],
   pharmacy: ["Kotlin", "Java"],
@@ -114,7 +113,7 @@ function groupFor(project: PortfolioProject): ProjectGroup {
   if (["doompedia", "pharmacy", "bachelor"].includes(project.id))
     return "mobile";
   if (
-    ["ocpp-demo", "aes", "chatting-application", "tariffguard"].includes(
+    ["ocpp-demo", "aes", "chatting-application"].includes(
       project.id,
     )
   )
@@ -213,7 +212,6 @@ const projectIcons: Record<string, LucideIcon> = {
   "ocpp-demo": PlugZap,
   anubis: Puzzle,
   bachelor: Smartphone,
-  tariffguard: ShieldCheck,
   commit: GitCommitHorizontal,
   rps: Activity,
   gems: Gem,

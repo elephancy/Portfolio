@@ -162,23 +162,6 @@ export const projects: PortfolioProject[] = [
     featured: false,
   },
   {
-    id: 'tariffguard',
-    title: 'TariffGuard',
-    repoName: 'TariffGuard',
-    description: 'Serverless EV charging tariff validation, session auditing, alerts, and operations reporting.',
-    category: 'live',
-    status: 'featured',
-    language: 'TypeScript',
-    stack: ['React', 'TypeScript', 'Python', 'AWS Lambda', 'DynamoDB', 'SQS', 'Terraform'],
-    repoUrl: `${github}/TariffGuard`,
-    liveUrl: 'https://tariffguard.elfeel.me',
-    updatedAt: '2026-07-01',
-    domain: 'tariffguard.elfeel.me',
-    highlights: ['Idempotent session ingestion', 'Asynchronous tariff validation', 'Daily audit and alert operations'],
-    lessonsLearned: ['Serverless workflows need explicit idempotency, decimal-safe billing, and observable async boundaries.'],
-    featured: false,
-  },
-  {
     id: 'rps',
     title: 'RPS',
     repoName: 'rps',
@@ -349,7 +332,7 @@ export const projects: PortfolioProject[] = [
 ];
 
 export const featuredProject = projects.find((project) => project.featured) ?? projects[0];
-export const liveProjectIds = ['portfolio', 'scheduler', 'typeshift', 'doompedia', 'ocpp-demo', 'anubis', 'bachelor', 'tariffguard', 'commit'];
+export const liveProjectIds = ['portfolio', 'scheduler', 'typeshift', 'doompedia', 'ocpp-demo', 'anubis', 'bachelor', 'commit'];
 export const liveProjects = liveProjectIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean) as PortfolioProject[];
 export const universityProjects = projects.filter((project) => project.category === 'university');
 

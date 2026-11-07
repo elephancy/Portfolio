@@ -164,25 +164,6 @@ export const previewArtifacts: Record<string, PreviewArtifact> = {
       poster: '/project-previews/Bachelor.png',
     },
   },
-  tariffguard: {
-    projectId: 'tariffguard',
-    source: 'screenshot',
-    generatedAt: '2026-07-04',
-    title: 'TariffGuard operations',
-    summary: 'Tariff validation dashboard with session workflows, alert triage, and daily audit reporting.',
-    states: ['Session operations', 'Alert board', 'Daily audit'],
-    screenshot: {
-      kind: 'image',
-      alt: 'TariffGuard dashboard showing a daily EV charging tariff audit.',
-      path: '/project-previews/TariffGuard.png',
-    },
-    video: {
-      sources: [
-        { src: '/project-previews/videos/tariffguard.mp4', type: 'video/mp4' },
-      ],
-      poster: '/project-previews/TariffGuard.png',
-    },
-  },
   rps: {
     projectId: 'rps',
     source: 'screenshot',
