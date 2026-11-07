@@ -17,16 +17,17 @@ export const projectPages = [
   {
     slug: "found-roll",
     title: "Found Roll",
+    archived: true,
     category: "Lost property recovery",
     description:
       "Found Roll coordinates a lost-property case across separate custodians while keeping claim evidence and release decisions under human control.",
     introduction:
       "A lost item can pass through a venue, transit system, and airline, each with its own inventory. Found Roll narrows a report to eligible custodians, uses a bounded Gemini analyst to propose one source-linked question, and records the decisions that take a case toward release.",
     details: [
-      "The public Completed Case Story shows a closed synthetic camera-pouch case, its timeline, and the internal integrity summary without exposing private claim evidence.",
-      "Claim acceptance, staff identity checks, supervisor approval, and release remain in protected workflows. The simulated relay is not proof of a physical handoff.",
+      "The Completed Case Story demonstrated a closed synthetic camera-pouch case, its timeline, and the internal integrity summary without exposing private claim evidence.",
+      "Claim acceptance, staff identity checks, supervisor approval, and release were designed as protected workflows. The simulated relay is not proof of a physical handoff.",
     ],
-    liveUrl: "https://foundroll.elfeel.me/",
-    repositoryUrl: "https://github.com/elephancy/found-roll",
+    liveUrl: null,
+    repositoryUrl: "https://github.com/elephancy/FoundRoll",
   },
 ] as const;
