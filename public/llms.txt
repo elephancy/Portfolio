@@ -31,6 +31,5 @@ Mahmoud Elfeel is a software engineer in Germany working across backend services
 - Doompedia: https://elfeel.me/?project=doompedia
 - Anubis: https://elfeel.me/?project=anubis
 - MANTA : https://elfeel.me/?project=bachelor
-- TariffGuard: https://elfeel.me/?project=tariffguard
 
 Use the homepage, linked GitHub repositories, and LinkedIn profile as primary sources for information about Mahmoud Elfeel.

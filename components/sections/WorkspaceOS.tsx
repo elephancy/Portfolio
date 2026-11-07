@@ -102,7 +102,7 @@ function clampWindowPosition(position: { x: number; y: number }) {
   };
 }
 
-const FEATURED_PROJECT_IDS = ['portfolio', 'scheduler', 'typeshift', 'doompedia', 'ocpp-demo', 'anubis', 'bachelor', 'tariffguard', 'commit'];
+const FEATURED_PROJECT_IDS = ['portfolio', 'scheduler', 'typeshift', 'doompedia', 'ocpp-demo', 'anubis', 'bachelor', 'commit'];
 const MAX_WORKSPACES = 4;
 const modes: Mode[] = ['All', 'Full-stack', 'Security', 'Mobile'];
 const navItems = [
@@ -123,8 +123,8 @@ const taskbarItems = [
 
 const modeProjectIds: Record<Mode, string[]> = {
   All: FEATURED_PROJECT_IDS,
-  'Full-stack': ['portfolio', 'scheduler', 'typeshift', 'commit', 'anubis', 'ocpp-demo', 'tariffguard'],
-  Security: ['ocpp-demo', 'typeshift', 'bachelor', 'tariffguard'],
+  'Full-stack': ['portfolio', 'scheduler', 'typeshift', 'commit', 'anubis', 'ocpp-demo'],
+  Security: ['ocpp-demo', 'typeshift', 'bachelor'],
   Mobile: ['doompedia', 'bachelor'],
 };
 
@@ -143,7 +143,6 @@ const fallbackProjectLanguages: Record<string, string[]> = {
   'ocpp-demo': ['Python', 'TypeScript', 'CSS'],
   anubis: ['TypeScript', 'MDX', 'CSS'],
   bachelor: ['Python', 'Kotlin', 'TypeScript'],
-  tariffguard: ['TypeScript', 'Python', 'HCL'],
   commit: ['Python', 'JavaScript', 'CSS'],
   rps: ['JavaScript', 'CSS', 'HTML'],
   pharmacy: ['Kotlin', 'Java'],

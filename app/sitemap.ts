@@ -17,7 +17,6 @@ const publicRoutes: ReadonlyArray<readonly [host: string, paths: readonly string
     ["/", "/how-it-works", "/privacy"],
   ],
   ["https://systemforge.elfeel.me", ["/"]],
-  ["https://tariffguard.elfeel.me", ["/"]],
   [
     "https://typeshift.elfeel.me",
     [

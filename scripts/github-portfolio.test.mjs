@@ -3,7 +3,7 @@ import test from 'node:test';
 import { fetchGithubRepos } from '../lib/githubPortfolioData.ts';
 
 test('retired projects never enter the portfolio or trigger detail fetches', async (t) => {
-  const names = ['Curate', 'FoundRoll', 'Found-Roll', 'SituationRoom', 'Situation-Room', 'OtherArchived', 'Planora'];
+  const names = ['Curate', 'FoundRoll', 'Found-Roll', 'SituationRoom', 'Situation-Room', 'TariffGuard', 'Tariff-Guard', 'OtherArchived', 'Planora'];
   const requests = [];
   t.mock.method(globalThis, 'fetch', async (input) => {
     const url = String(input);
@@ -23,5 +23,5 @@ test('retired projects never enter the portfolio or trigger detail fetches', asy
   });
   const repos = await fetchGithubRepos();
   assert.deepEqual(repos.map((repo) => repo.name).sort(), ['OtherArchived', 'Planora']);
-  assert.equal(requests.some((url) => /\/repos\/elephancy\/(?:Curate|Found-?Roll|Situation-?Room)\//i.test(url)), false);
+  assert.equal(requests.some((url) => /\/repos\/elephancy\/(?:Curate|Found-?Roll|Situation-?Room|Tariff-?Guard)\//i.test(url)), false);
 });

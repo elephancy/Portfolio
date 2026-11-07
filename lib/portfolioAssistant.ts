@@ -127,7 +127,6 @@ const projectAliases: Record<string, string[]> = {
   doompedia: ['doompedia', 'wikipedia discovery'],
   anubis: ['anubis', 'analog horror', 'arg'],
   bachelor: ['manta', 'bachelor thesis', 'thesis'],
-  tariffguard: ['tariffguard', 'tariff guard', 'tariff validation'],
   rps: ['rps', 'rock paper scissors'],
   gems: ['gems', 'minecraft mod'],
   'processor-simulation': ['processorsimulation', 'processor simulation', 'cpu simulator'],
@@ -141,7 +140,6 @@ const projectAliases: Record<string, string[]> = {
 };
 
 const projectConcepts: Record<string, string[]> = {
-  tariffguard: ['backend', 'serverless', 'aws', 'lambda', 'dynamodb', 'event processing', 'audit', 'ev charging'],
   typeshift: ['backend', 'full stack', 'express', 'postgresql', 'authentication', 'multiplayer', 'web app'],
   scheduler: ['backend', 'optimization', 'algorithm', 'or-tools', 'constraint solver', 'python', 'desktop'],
   bachelor: ['security', 'privacy', 'android', 'kotlin', 'machine learning', 'network', 'research'],
@@ -155,10 +153,10 @@ const projectConcepts: Record<string, string[]> = {
 };
 
 const categoryProjectPriority: Partial<Record<AssistantCategory, Record<string, number>>> = {
-  backend: { tariffguard: 8, typeshift: 6, scheduler: 4, 'ocpp-demo': 3, 'chatting-application': 2 },
+  backend: { typeshift: 6, scheduler: 4, 'ocpp-demo': 3, 'chatting-application': 2 },
   mobile: { doompedia: 8, bachelor: 6, pharmacy: 4 },
   security: { bachelor: 8, aes: 5 },
-  'ev-charging': { tariffguard: 8, 'ocpp-demo': 7 },
+  'ev-charging': { 'ocpp-demo': 7 },
   thesis: { bachelor: 10 },
   games: { anubis: 8, gems: 5, rps: 3 },
 };
@@ -166,11 +164,11 @@ const categoryProjectPriority: Partial<Record<AssistantCategory, Record<string, 
 const comparativeProjectPriority: Array<{ pattern: RegExp; projectIds: string[] }> = [
   {
     pattern: /\b(hardest|toughest|most (?:complex|challenging|difficult|ambitious))\b/i,
-    projectIds: ['bachelor', 'tariffguard', 'typeshift', 'scheduler'],
+    projectIds: ['bachelor', 'typeshift', 'scheduler'],
   },
   {
     pattern: /\b(most impressive|strongest overall|best overall)\b/i,
-    projectIds: ['bachelor', 'tariffguard', 'typeshift', 'anubis'],
+    projectIds: ['bachelor', 'typeshift', 'anubis'],
   },
 ];
 
