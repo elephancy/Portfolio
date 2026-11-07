@@ -210,6 +210,34 @@ test('secondary retry-after is respected without discarding dated repository dat
   assert.equal(calls, 2);
 });
 
+test('concurrent blocked responses cannot shorten an existing longer retry deadline', async (t) => {
+  const api = await import('../lib/githubPortfolioData.ts?test=concurrent-backoff');
+  let clock = Date.now();
+  t.mock.method(Date, 'now', () => clock);
+  t.mock.method(console, 'warn', () => {});
+  let calls = 0;
+  const pending = [];
+  t.mock.method(globalThis, 'fetch', () => {
+    calls++;
+    return calls <= 2
+      ? new Promise((resolve) => pending.push(resolve))
+      : Promise.resolve(Response.json([repository('Recovered')]));
+  });
+  const first = api.githubRepositoryResponse(null, projects);
+  const second = api.githubRepositoryResponse(null, projects);
+  const reset = Math.ceil(clock / 1000) + 180;
+  pending[0](new Response('', { status: 403, headers: { 'x-ratelimit-remaining': '0', 'x-ratelimit-reset': String(reset) } }));
+  await first;
+  pending[1](new Response('', { status: 429, headers: { 'retry-after': '60' } }));
+  await second;
+  clock += 61_000;
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-public-snapshot');
+  assert.equal(calls, 2);
+  clock = reset * 1000 + 1;
+  assert.equal((await (await api.githubRepositoryResponse(null, projects)).json()).source, 'github-api-live');
+  assert.equal(calls, 3);
+});
+
 test('manual refresh uses public requests only and writes complete, retired-filtered source metadata', async () => {
   let calls = 0;
   let output;

@@ -267,7 +267,7 @@ async function githubFetch(url: string, options: RequestInit & { next: { revalid
     const remaining = numericHeader('x-ratelimit-remaining');
     const reset = numericHeader('x-ratelimit-reset');
     const retryAfter = numericHeader('retry-after');
-    retryGitHubAt = Math.max(Date.now() + 60_000, remaining === 0 && reset ? reset * 1000 : 0, retryAfter ? Date.now() + retryAfter * 1000 : 0);
+    retryGitHubAt = Math.max(retryGitHubAt, Date.now() + 60_000, remaining === 0 && reset ? reset * 1000 : 0, retryAfter ? Date.now() + retryAfter * 1000 : 0);
     console.warn('portfolio-github-request-blocked', {
       status: response.status, remaining, reset, retryAfter,
       reason: remaining === 0 ? 'primary-rate-limit' : 'forbidden-or-secondary-limit',
