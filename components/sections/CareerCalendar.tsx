@@ -5,6 +5,7 @@ import { Box, Button, Container, Flex, HStack, Input, Spinner, Text, VisuallyHid
 import { motion } from 'framer-motion';
 import ProjectCard from '../ui/ProjectCard';
 import SectionHeading from '../ui/SectionHeading';
+import { useGithubRepoDetails } from '../../hooks/useGithubRepoDetails';
 
 type RepoItem = {
   name: string;
@@ -23,6 +24,7 @@ type RepoItem = {
 type ApiResponse = {
   repos?: RepoItem[];
   error?: string;
+  source?: string;
 };
 
 const GRAPH_PADDING = 6;
@@ -54,6 +56,7 @@ function timelinePercent(timestamp: number, start: number, end: number) {
 export default function CareerCalendar() {
   const [repos, setRepos] = useState<RepoItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [staticFallback, setStaticFallback] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<'all' | string>('all');
   const [selectedDomain, setSelectedDomain] = useState<'all' | string>('all');
@@ -77,6 +80,7 @@ export default function CareerCalendar() {
 
         if (active) {
           setRepos(data.repos);
+          setStaticFallback(data.source === 'portfolio-static-fallback');
         }
       } catch (err) {
         if (active) {
@@ -175,7 +179,9 @@ export default function CareerCalendar() {
     }
   }, [activeRepoName, filteredRepos]);
 
-  const activeRepo = filteredRepos.find((repo) => repo.name === activeRepoName) ?? null;
+  const activeRepoSummary = filteredRepos.find((repo) => repo.name === activeRepoName) ?? null;
+  const activeRepoDetail = useGithubRepoDetails(activeRepoSummary?.name);
+  const activeRepo = activeRepoDetail ?? activeRepoSummary;
   const activePoint = graphModel.points.find((point) => point.repo.name === activeRepo?.name) ?? null;
   const plotHeight = graphModel.laneCount * LANE_HEIGHT + 40;
 
@@ -380,7 +386,9 @@ export default function CareerCalendar() {
             <ProjectCard
               title={activeRepo.name}
               shortDesc={activeRepo.description ?? 'Repository with documented implementation details.'}
-              longDesc={`Created ${formatDate(activeRepo.createdAt)} and last updated ${formatDate(activeRepo.pushedAt)}.`}
+              longDesc={staticFallback && !activeRepoDetail
+                ? `Portfolio record last updated ${formatDate(activeRepo.updatedAt)}.`
+                : `Created ${formatDate(activeRepo.createdAt)} and last updated ${formatDate(activeRepo.pushedAt)}.`}
               year={new Date(activeRepo.pushedAt).getFullYear()}
               techStack={activeRepo.techStack}
               features={activeRepo.features}

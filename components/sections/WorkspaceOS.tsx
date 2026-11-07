@@ -43,6 +43,7 @@ import {
 import { previewArtifacts } from '../../data/projectPreviewArtifacts';
 import { trackEvent, trackProjectOpen } from '../../lib/analytics';
 import type { RepoView } from '../../lib/githubPortfolioData';
+import { useGithubRepoDetails } from '../../hooks/useGithubRepoDetails';
 import { PortfolioAssistant } from '../ui/PortfolioAssistant';
 import styles from './workspaceOS.module.css';
 
@@ -479,7 +480,7 @@ export default function WorkspaceOS() {
   const [terminalLines, setTerminalLines] = useState<string[]>(['$ help', 'Commands: help, status, projects, graph, cv, contact, select <project>, filter <all|active|archived>, clear']);
   const [goMode, setGoMode] = useState(false);
   const [trayOpen, setTrayOpen] = useState(false);
-  const [githubRepos, setGithubRepos] = useState<RepoView[]>([]);
+  const [githubRepoSummaries, setGithubRepos] = useState<RepoView[]>([]);
   const [activeNav, setActiveNav] = useState('featured');
   const [emailCopied, setEmailCopied] = useState(false);
   const stats = getProjectStats();
@@ -677,6 +678,14 @@ export default function WorkspaceOS() {
   const activeWorkspace = workspaces.find((workspace) => workspace.id === activeWorkspaceId) ?? DEFAULT_WORKSPACES[0];
   const workspaceProjectIds = activeWorkspace.fixed ? FEATURED_PROJECT_IDS : activeWorkspace.projectIds;
   const selectedProject = projects.find((project) => project.id === selectedId) ?? featuredProject;
+  const selectedRepoDetail = useGithubRepoDetails(findGithubRepo(selectedProject, githubRepoSummaries)?.name ?? selectedProject.repoName);
+  const githubRepos = useMemo(() => {
+    if (!selectedRepoDetail) return githubRepoSummaries;
+    const matches = (repo: RepoView) => repo.fullName.toLowerCase() === selectedRepoDetail.fullName.toLowerCase();
+    return githubRepoSummaries.some(matches)
+      ? githubRepoSummaries.map((repo) => matches(repo) ? selectedRepoDetail : repo)
+      : [...githubRepoSummaries, selectedRepoDetail];
+  }, [githubRepoSummaries, selectedRepoDetail]);
   const modeProjects = useMemo(
     () => {
       const allowedProjectIds = new Set(modeProjectIds[mode]);

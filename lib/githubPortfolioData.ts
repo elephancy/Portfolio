@@ -1,3 +1,5 @@
+import type { PortfolioProject } from '../data/projects';
+
 const OWNER = 'elephancy';
 // Retired projects are kept in source control, but no longer shown in the portfolio.
 const RETIRED_PROJECT_NAMES = new Set(['curate', 'foundroll', 'situationroom', 'tariffguard']);
@@ -13,6 +15,7 @@ type GithubRepo = {
   updated_at: string;
   pushed_at: string;
   topics?: string[];
+  private?: boolean;
 };
 
 type GithubContent = {
@@ -277,58 +280,55 @@ function toTitle(value: string) {
 }
 
 async function fetchRootContents(repoRef: GithubRepoRef) {
-  const response = await fetch(`${repoApiBase(repoRef)}/contents`, {
-    headers: githubHeaders(),
-    next: { revalidate: 3600 },
-  });
-
-  if (!response.ok) {
+  try {
+    const response = await fetch(`${repoApiBase(repoRef)}/contents`, {
+      headers: githubHeaders(),
+      next: { revalidate: 3600 },
+    });
+    if (!response.ok) return [] as GithubContent[];
+    const data = (await response.json()) as GithubContent[];
+    return Array.isArray(data) ? data : [];
+  } catch {
     return [] as GithubContent[];
   }
-
-  const data = (await response.json()) as GithubContent[];
-  return Array.isArray(data) ? data : [];
 }
 
 async function fetchReadme(repoRef: GithubRepoRef) {
-  const response = await fetch(`${repoApiBase(repoRef)}/readme`, {
-    headers: {
-      ...githubHeaders(),
-      Accept: 'application/vnd.github.raw+json',
-    },
-    next: { revalidate: 3600 },
-  });
-
-  if (!response.ok) {
+  try {
+    const response = await fetch(`${repoApiBase(repoRef)}/readme`, {
+      headers: {
+        ...githubHeaders(),
+        Accept: 'application/vnd.github.raw+json',
+      },
+      next: { revalidate: 3600 },
+    });
+    return response.ok ? await response.text() : '';
+  } catch {
     return '';
   }
-
-  return response.text();
 }
 
 async function fetchLanguages(repoRef: GithubRepoRef, fallbackLanguage: string | null) {
-  const response = await fetch(`${repoApiBase(repoRef)}/languages`, {
-    headers: githubHeaders(),
-    next: { revalidate: 3600 },
-  });
-
-  if (!response.ok) {
-    return fallbackLanguage ? [{ name: fallbackLanguage, bytes: 1, percent: 100 }] : [];
-  }
-
-  const byteCounts = (await response.json()) as Record<string, number>;
-  const total = Object.values(byteCounts).reduce((sum, bytes) => sum + bytes, 0);
-  if (!total) {
-    return fallbackLanguage ? [{ name: fallbackLanguage, bytes: 1, percent: 100 }] : [];
-  }
-
-  return Object.entries(byteCounts)
-    .sort(([, left], [, right]) => right - left)
-    .map(([name, bytes]) => ({
-      name,
-      bytes,
-      percent: Math.round((bytes / total) * 1000) / 10,
+  try {
+    const response = await fetch(`${repoApiBase(repoRef)}/languages`, {
+      headers: githubHeaders(),
+      next: { revalidate: 3600 },
+    });
+    if (!response.ok) return fallbackLanguages(fallbackLanguage);
+    const byteCounts = (await response.json()) as Record<string, number>;
+    const entries = Object.entries(byteCounts).filter(([, bytes]) => typeof bytes === 'number' && bytes > 0);
+    const total = entries.reduce((sum, [, bytes]) => sum + bytes, 0);
+    if (!total) return fallbackLanguages(fallbackLanguage);
+    return entries.sort(([, left], [, right]) => right - left).map(([name, bytes]) => ({
+      name, bytes, percent: Math.round((bytes / total) * 1000) / 10,
     }));
+  } catch {
+    return fallbackLanguages(fallbackLanguage);
+  }
+}
+
+function fallbackLanguages(language: string | null): RepoLanguage[] {
+  return language ? [{ name: language, bytes: 1, percent: 100 }] : [];
 }
 
 function extractAbout(readme: string, fallback: string | null) {
@@ -395,6 +395,33 @@ function inferDomain(repo: GithubRepo, readme: string) {
   return repo.language ? toTitle(repo.language) : 'General';
 }
 
+function visibleRepoName(name: string) {
+  return !name.toLowerCase().includes('.github') && !RETIRED_PROJECT_NAMES.has(name.toLowerCase().replace(/[-_\s]/g, ''));
+}
+
+function repoView(repo: GithubRepo, readme = '', rootItems: GithubContent[] = [], languages = fallbackLanguages(repo.language)): RepoView {
+  const repoRef = repoRefFromRepo(repo);
+  const curated = curatedDataFor(repo);
+  const features = curated?.features ?? extractBulletFeatures(readme);
+  return {
+    name: repo.name,
+    fullName: repo.full_name || `${repoRef.owner}/${repoRef.name}`,
+    slug: slugify(repo.name),
+    url: repo.html_url,
+    description: repo.description,
+    language: repo.language,
+    createdAt: repo.created_at,
+    updatedAt: repo.updated_at,
+    pushedAt: repo.pushed_at,
+    topics: repo.topics ?? [],
+    domain: curated?.domain ?? inferDomain(repo, readme),
+    techStack: curated?.techStack ?? inferTechStack(repo.language, repo.topics ?? [], rootItems, readme),
+    features: features.length > 0 ? features : ['Repository maintained with regular updates and clear structure.'],
+    about: extractAbout(readme, repo.description),
+    languages,
+  };
+}
+
 export async function fetchGithubRepos() {
   const response = await fetch(`https://api.github.com/users/${OWNER}/repos?per_page=100&sort=updated`, {
     headers: githubHeaders(),
@@ -402,6 +429,7 @@ export async function fetchGithubRepos() {
   });
 
   if (!response.ok) {
+    console.warn('portfolio-github-list-http', { status: response.status });
     throw new Error('Failed to fetch repositories from GitHub');
   }
 
@@ -409,46 +437,60 @@ export async function fetchGithubRepos() {
   const seenRepos = new Set<string>();
   const filtered = primaryRepos.filter((repo) => {
     const repoKey = (repo.full_name || repo.name).toLowerCase();
-    const projectName = repo.name.toLowerCase().replace(/[-_\s]/g, '');
-    if (RETIRED_PROJECT_NAMES.has(projectName)) return false;
-    if (repo.name.toLowerCase().includes('.github') || seenRepos.has(repoKey)) return false;
+    if (repo.private || !visibleRepoName(repo.name) || seenRepos.has(repoKey)) return false;
     seenRepos.add(repoKey);
     return true;
   });
 
-  const mapped = await Promise.all(
-    filtered.map(async (repo) => {
-      const repoRef = repoRefFromRepo(repo);
-      const curated = curatedDataFor(repo);
-      const [rootItems, readme, languages] = await Promise.all([
-        curated ? Promise.resolve([] as GithubContent[]) : fetchRootContents(repoRef),
-        fetchReadme(repoRef),
-        fetchLanguages(repoRef, repo.language),
-      ]);
-
-      const features = curated?.features ?? extractBulletFeatures(readme);
-      const techStack = curated?.techStack ?? inferTechStack(repo.language, repo.topics ?? [], rootItems, readme);
-      const domain = curated?.domain ?? inferDomain(repo, readme);
-
-      return {
-        name: repo.name,
-        fullName: repo.full_name || `${repoRef.owner}/${repoRef.name}`,
-        slug: slugify(repo.name),
-        url: repo.html_url,
-        description: repo.description,
-        language: repo.language,
-        createdAt: repo.created_at,
-        updatedAt: repo.updated_at,
-        pushedAt: repo.pushed_at,
-        topics: repo.topics ?? [],
-        domain,
-        techStack,
-        features: features.length > 0 ? features : ['Repository maintained with regular updates and clear structure.'],
-        about: extractAbout(readme, repo.description),
-        languages,
-      } satisfies RepoView;
-    }),
-  );
-
+  // List all public repositories in one upstream request. Rich details are
+  // fetched only for the repository a visitor opens, within Workers limits.
+  const mapped = filtered.map((repo) => repoView(repo));
   return mapped.sort((a, b) => +new Date(b.pushedAt) - +new Date(a.pushedAt));
+}
+
+export async function fetchGithubRepoDetails(name: string): Promise<RepoView | null> {
+  if (!/^[a-z0-9][a-z0-9._-]{0,99}$/i.test(name) || !visibleRepoName(name)) return null;
+  const response = await fetch(`${repoApiBase({ owner: OWNER, name })}`, {
+    headers: githubHeaders(), next: { revalidate: 3600 },
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    console.warn('portfolio-github-detail-http', { status: response.status });
+    throw new Error('Failed to fetch repository from GitHub');
+  }
+  const repo = (await response.json()) as GithubRepo;
+  // A configured token must never expose private or redirected-owner data.
+  if (repo.private !== false || !visibleRepoName(repo.name) || repo.full_name?.toLowerCase() !== `${OWNER}/${name}`.toLowerCase()) return null;
+  const repoRef = repoRefFromRepo(repo);
+  const [readme, rootItems, languages] = await Promise.all([
+    fetchReadme(repoRef),
+    curatedDataFor(repo) ? Promise.resolve([] as GithubContent[]) : fetchRootContents(repoRef),
+    fetchLanguages(repoRef, repo.language),
+  ]);
+  return repoView(repo, readme, rootItems, languages);
+}
+
+function staticGithubRepos(projects: readonly PortfolioProject[]): RepoView[] {
+  return projects.filter((project) => visibleRepoName(project.repoName)).map((project) => ({
+    name: project.repoName, fullName: new URL(project.repoUrl).pathname.slice(1), slug: slugify(project.repoName),
+    url: project.repoUrl, description: project.description, language: project.language,
+    createdAt: project.updatedAt, updatedAt: project.updatedAt, pushedAt: project.updatedAt,
+    topics: [], domain: project.domain ?? project.category, techStack: project.stack,
+    features: project.highlights, about: project.description, languages: fallbackLanguages(project.language),
+  }));
+}
+
+export async function githubRepositoryResponse(name: string | null, projects: readonly PortfolioProject[]): Promise<Response> {
+  try {
+    if (name !== null) {
+      const repo = await fetchGithubRepoDetails(name);
+      return repo ? Response.json({ repo, source: 'github-api-live' }) : Response.json({ error: 'Repository not available.' }, { status: 404 });
+    }
+    return Response.json({ repos: await fetchGithubRepos(), source: 'github-api-live' });
+  } catch {
+    console.warn('portfolio-github-unavailable');
+    return name !== null
+      ? Response.json({ error: 'Repository details are temporarily unavailable.' }, { status: 503 })
+      : Response.json({ repos: staticGithubRepos(projects), source: 'portfolio-static-fallback', warning: 'GitHub data is temporarily unavailable.' });
+  }
 }
