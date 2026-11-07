@@ -402,7 +402,7 @@ function ProjectPreview({ project }: { project: PortfolioProject }) {
       <div className={`${styles.previewShell} ${styles.portfolioPreview}`} aria-label="Portfolio preview">
         <div className={styles.recursiveViewport}>
           <div className={styles.recursiveScreen}>
-            <img src={screenshotPath} alt="The elfeel.me workspace recursively displaying itself." decoding="async" />
+            <img src={screenshotPath} alt="The elfeel.me workspace recursively displaying itself." loading="lazy" decoding="async" />
             <div className={styles.recursiveLayers} aria-hidden="true">
               {[0.68, 0.4624, 0.3144, 0.2138, 0.1454, 0.0989, 0.0672, 0.0457].map((scale, index) => (
                 <span key={index} style={{ '--depth': index, '--recursive-scale': scale } as CSSProperties}>
