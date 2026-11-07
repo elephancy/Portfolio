@@ -1,3 +1,5 @@
+import { currentAnalyticsConsent } from "./analyticsConsent";
+
 type AnalyticsProperties = Record<string, string | number | boolean>;
 
 type UmamiTracker = {
@@ -21,13 +23,12 @@ export function trackEvent(
   properties?: AnalyticsProperties,
 ) {
   if (typeof window === "undefined") return;
+  if (currentAnalyticsConsent() !== "accepted") return;
   if (window.umami) {
     window.umami.track(eventName, properties);
     return;
   }
 
-  const consent = window.localStorage.getItem("elfeel-analytics-consent");
-  if (consent !== "accepted") return;
   window.elfeelAnalyticsQueue ??= [];
   if (window.elfeelAnalyticsQueue.length < MAX_QUEUED_EVENTS) {
     window.elfeelAnalyticsQueue.push({ eventName, properties });
@@ -35,7 +36,12 @@ export function trackEvent(
 }
 
 export function flushAnalyticsQueue() {
-  if (typeof window === "undefined" || !window.umami) return;
+  if (typeof window === "undefined") return;
+  if (currentAnalyticsConsent() !== "accepted") {
+    window.elfeelAnalyticsQueue = [];
+    return;
+  }
+  if (!window.umami) return;
   const queued = window.elfeelAnalyticsQueue ?? [];
   window.elfeelAnalyticsQueue = [];
   queued.forEach(({ eventName, properties }) =>

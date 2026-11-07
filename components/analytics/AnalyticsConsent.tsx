@@ -8,10 +8,11 @@ import {
   trackEvent,
 } from "../../lib/analytics";
 import styles from "./analyticsConsent.module.css";
-
-type ConsentState = "accepted" | "declined" | null;
-
-const STORAGE_KEY = "elfeel-analytics-consent";
+import {
+  type AnalyticsConsent as ConsentState,
+  restoreAnalyticsConsent,
+  saveAnalyticsConsent,
+} from "../../lib/analyticsConsent";
 
 export default function AnalyticsConsent() {
   const scriptSrc =
@@ -22,13 +23,14 @@ export default function AnalyticsConsent() {
   const sentryLoaderUrl = process.env.NEXT_PUBLIC_SENTRY_LOADER_URL;
   const [consent, setConsent] = useState<ConsentState>(null);
   const [ready, setReady] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(true);
 
   useEffect(() => {
     const openSettings = () => setSettingsOpen(true);
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = restoreAnalyticsConsent();
     if (stored === "accepted" || stored === "declined") {
       setConsent(stored);
+      setSettingsOpen(false);
     } else {
       setSettingsOpen(true);
     }
@@ -143,16 +145,16 @@ export default function AnalyticsConsent() {
 
   const saveConsent = (nextConsent: Exclude<ConsentState, null>) => {
     const analyticsWasLoaded = consent === "accepted";
-    window.localStorage.setItem(STORAGE_KEY, nextConsent);
+    const declineUrl = saveAnalyticsConsent(nextConsent);
     setConsent(nextConsent);
     setSettingsOpen(false);
 
-    if (analyticsWasLoaded && nextConsent === "declined") {
+    if (declineUrl) {
+      window.location.replace(declineUrl);
+    } else if (analyticsWasLoaded && nextConsent === "declined") {
       window.location.reload();
     }
   };
-
-  if (!ready) return null;
 
   return (
     <>
@@ -182,7 +184,7 @@ export default function AnalyticsConsent() {
       ) : null}
 
       {settingsOpen ? (
-        <div className={styles.backdrop}>
+        <div className={styles.backdrop} data-initial-consent={ready ? undefined : ""}>
           <section
             className={styles.dialog}
             role="dialog"
@@ -199,7 +201,7 @@ export default function AnalyticsConsent() {
               type into Elly. They stay disabled unless you accept.
             </p>
             <p className={styles.necessary}>
-              Your choice is stored locally so the site can remember it.
+              Your choice is remembered locally when your browser permits it.
             </p>
             <div className={styles.actions}>
               <button type="button" onClick={() => saveConsent("declined")}>

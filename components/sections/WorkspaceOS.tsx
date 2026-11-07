@@ -558,7 +558,10 @@ export default function WorkspaceOS() {
     if (!workspaceReady) return;
 
     const url = new URL(window.location.href);
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(url.search);
+    // Update only workspace-owned parameters; retain privacy fallbacks and
+    // campaign parameters, together with Next.js/browser history state.
+    ['project', 'mode', 'status', 'q', 'view'].forEach((key) => params.delete(key));
 
     if (selectedId !== 'portfolio') params.set('project', selectedId);
     if (mode !== 'All') params.set('mode', mode.toLowerCase());
@@ -567,7 +570,7 @@ export default function WorkspaceOS() {
     if (activeWindow === 'graph') params.set('view', 'graph');
 
     url.search = params.toString();
-    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
   }, [activeWindow, mode, query, repoFilter, selectedId, workspaceReady]);
 
   useEffect(() => {
@@ -1131,13 +1134,13 @@ export default function WorkspaceOS() {
           <div className={styles.panelHeader}>
             <div>
               <h1 id="about-title">About</h1>
-              <h3>
+              <p className={styles.aboutSummary}>
                 I'm a junior software engineer in Germany with industry experience building backend services, internal
                 dashboards, desktop automation tools, Android/iOS workflows, and security-connected systems.
                 Hands-on with Python/FastAPI, TypeScript/React/Next.js, Node.js, Kotlin, Swift, Linux, Docker,
                 CI/CD, and REST APIs. B.Sc. Networking Engineering expected July 2026; interested in backend and
                 full-stack roles.
-              </h3>
+              </p>
               <p>My name is also written as Mahmoud Elfil in some profiles and documents.</p>
             </div>
           </div>
@@ -1284,6 +1287,7 @@ export default function WorkspaceOS() {
             <a
               key={item.label}
               href={item.href}
+              aria-label={item.label}
               className={`${activeWindow === item.app ? styles.taskActive : ''} ${windows.some((windowItem) => windowItem.app === item.app && windowItem.minimized) ? styles.taskMinimized : ''} ${windows.some((windowItem) => windowItem.app === item.app && !windowItem.minimized) ? styles.taskOpen : ''}`}
               onClick={(event) => {
                 event.preventDefault();
@@ -1348,7 +1352,7 @@ export default function WorkspaceOS() {
               </a>
             </div>
           )}
-          <button type="button" className={styles.trayToggle} onClick={() => setTrayOpen((open) => !open)} aria-expanded={trayOpen}>
+          <button type="button" className={styles.trayToggle} onClick={() => setTrayOpen((open) => !open)} aria-expanded={trayOpen} aria-label={trayOpen ? 'Close contact links' : 'Open contact links'}>
             <ChevronUp size={23} />
           </button>
         </div>
