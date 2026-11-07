@@ -521,6 +521,13 @@
   font-size: 13px;
 }
 
+.panelHeader .aboutSummary {
+  margin: 1em 0;
+  color: var(--text);
+  font-size: 1.17em;
+  font-weight: 700;
+}
+
 .panelHeader > span,
 .panelHeaderActions > span {
   color: var(--green);

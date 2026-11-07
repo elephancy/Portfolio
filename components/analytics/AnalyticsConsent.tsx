@@ -22,13 +22,19 @@ export default function AnalyticsConsent() {
   const sentryLoaderUrl = process.env.NEXT_PUBLIC_SENTRY_LOADER_URL;
   const [consent, setConsent] = useState<ConsentState>(null);
   const [ready, setReady] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(true);
 
   useEffect(() => {
     const openSettings = () => setSettingsOpen(true);
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem(STORAGE_KEY);
+    } catch {
+      // Keep the prompt available when storage is blocked.
+    }
     if (stored === "accepted" || stored === "declined") {
       setConsent(stored);
+      setSettingsOpen(false);
     } else {
       setSettingsOpen(true);
     }
@@ -143,7 +149,11 @@ export default function AnalyticsConsent() {
 
   const saveConsent = (nextConsent: Exclude<ConsentState, null>) => {
     const analyticsWasLoaded = consent === "accepted";
-    window.localStorage.setItem(STORAGE_KEY, nextConsent);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, nextConsent);
+    } catch {
+      // The explicit choice still applies for this page when storage is blocked.
+    }
     setConsent(nextConsent);
     setSettingsOpen(false);
 
@@ -151,8 +161,6 @@ export default function AnalyticsConsent() {
       window.location.reload();
     }
   };
-
-  if (!ready) return null;
 
   return (
     <>
@@ -182,7 +190,7 @@ export default function AnalyticsConsent() {
       ) : null}
 
       {settingsOpen ? (
-        <div className={styles.backdrop}>
+        <div className={styles.backdrop} data-initial-consent={ready ? undefined : ""}>
           <section
             className={styles.dialog}
             role="dialog"
